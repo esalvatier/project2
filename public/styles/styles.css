@@ -1,3 +1,19 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+#main-content {
+  height: 500px;
+}
+
+#main-content-left {
+  height: 500px;
+}
+
+#main-content-center {
+  height: 500px;
+}
+
+#main-content-right {
+  height: 500px;
+}
