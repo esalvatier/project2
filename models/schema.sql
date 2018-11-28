@@ -31,7 +31,7 @@ CREATE TABLE userRel (
   relID BIGINT AUTO_INCREMENT,
   fromUser VARCHAR(255) NOT NULL,
   targetUser VARCHAR(255) NOT NULL,
-  statusCode TINYINT,
+  statusCode INT,
   sentTime DATETIME DEFAULT CURRENT_TIMESTAMP,
   responseTime DATETIME,
   PRIMARY KEY (relID),
