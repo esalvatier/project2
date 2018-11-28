@@ -1,12 +1,15 @@
 var db = require("../models");
 
+var script = "../public/js/auth.js";
+
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
     db.Example.findAll({}).then(function(dbExamples) {
       res.render("index", {
         msg: "Welcome!",
-        examples: dbExamples
+        examples: dbExamples,
+        script: script
       });
     });
   });

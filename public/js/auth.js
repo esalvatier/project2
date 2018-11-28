@@ -1,4 +1,3 @@
-// Initialize Firebase
 var config = {
   apiKey: "AIzaSyBqTcJJ_3u7P6Mg7RXJRgZlzuJcLd8XnnM",
   authDomain: "projectsounders-52f0a.firebaseapp.com",
@@ -15,8 +14,10 @@ $("#sign-in-btn").on("click", function(event) {
   event.preventDefault();
 
   // Grabs user input
-  var email = $("#e-mail-input").val().trim();
+  var email = $("#username-input").val().trim();
   var password = $("#password-input").val().trim();
+
+  console.log("Before auth");
 
  firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
   //Success, move to homepage.
