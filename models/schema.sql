@@ -1,25 +1,33 @@
-DROP DATABASE IF EXISTS eventOrganizersDB;
-CREATE DATABASE eventOrganizersDB;
+DROP DATABASE IF EXISTS eventOrganizerDB;
+CREATE DATABASE eventOrganizerDB;
 
 CREATE TABLE events (
-  id INT AUTO_INCREMENT,
+  eventID BIGINT AUTO_INCREMENT,
   event_time DATE NOT NULL,
   strt_time TIMESTAMP NOT NULL,
   end_time TIMESTAMP,
   loc VARCHAR(255) NOT NULL,
-  event_type VARCHAR(255) NOT NULL,
-  calenderObj JSON NOT NULL,
-  canceled BOOLEAN NOT NULL DEFAULT FALSE,
-  FOREIGN KEY event_owner REFERENCES users(uid),
-  PRIMARY KEY (id)
+  event_Obj JSON NOT NULL,
+  FOREIGN KEY event_owner REFERENCES users(uuid),
+  PRIMARY KEY (eventID)
 );
 
 CREATE TABLE users (
-  id INT AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  friends VARCHAR(255),
-  uid VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
+  tableID BIGINT AUTO_INCREMENT,
+  first_Name VARCHAR(255) NOT NULL,
+  last_Name VARCHAR(255),
+  uuid VARCHAR(255) NOT NULL,
+  PRIMARY KEY (tableID)
+);
+
+CREATE TABLE user_relationships (
+  relID BIGINT AUTO_INCREMENT,
+  from_User BIGINT NOT NULL,
+  target_User BIGINT NOT NULL,
+  status_Code TINYINT NOT NULL,
+  sent_Time DATETIME NOT NULL,
+  response_Time DATETIME,
+  PRIMARY KEY (relID)
 );
 
 /* id INT AUTO_INCREMENT,
