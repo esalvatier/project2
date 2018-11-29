@@ -1,39 +1,39 @@
-DROP DATABASE IF EXISTS eventOrganizersDB;
-CREATE DATABASE eventOrganizersDB;
-
-CREATE TABLE events (
-  id INT AUTO_INCREMENT,
-  event_time DATE NOT NULL,
-  strt_time TIMESTAMP NOT NULL,
-  end_time TIMESTAMP,
-  loc VARCHAR(255) NOT NULL,
-  event_type VARCHAR(255) NOT NULL,
-  calenderObj JSON NOT NULL,
-  canceled BOOLEAN NOT NULL DEFAULT FALSE,
-  FOREIGN KEY event_owner REFERENCES users(uid),
-  PRIMARY KEY (id)
-);
+DROP DATABASE IF EXISTS eventOrganizerDB;
+CREATE DATABASE eventOrganizerDB;
+USE eventOrganizerDB;
 
 CREATE TABLE users (
-  id INT AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  friends VARCHAR(255),
+  tableID BIGINT AUTO_INCREMENT,
+  firstName VARCHAR(255) NOT NULL,
+  lastName VARCHAR(255),
+  email VARCHAR(255) NOT NULL,
   uid VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
+  UNIQUE KEY uuid (uid),
+  PRIMARY KEY (tableID)
 );
 
-/* id INT AUTO_INCREMENT,
-  title VARCHAR(255) NOT NULL,
-  allDay BOOLEAN NOT NULL DEFAULT FALSE,
-  strt_time TIMESTAMP NOT NULL,
-  end_time TIMESTAMP,
-  url VARCHAR(255),
-  className VARCHAR(255),
-  editable,
-  startEditable,
-  durationEditable,
-  resourceEditable,
-  render,
-  overlap,
-  constrain
-  */
+CREATE TABLE statusCodes (
+  code INT AUTO_INCREMENT,
+  meaning VARCHAR(255) NOT NULL,
+  PRIMARY KEY (code)
+);
+
+CREATE TABLE events (
+  eventID BIGINT AUTO_INCREMENT,
+  loc VARCHAR(255) NOT NULL,
+  eventObj JSON NOT NULL,
+  eventOwner VARCHAR(255) NOT NULL,
+  PRIMARY KEY (eventID),
+  FOREIGN KEY (eventOwner) REFERENCES users(uid)
+);
+
+CREATE TABLE userRel (
+  relID BIGINT AUTO_INCREMENT,
+  fromUser VARCHAR(255) NOT NULL,
+  targetUser VARCHAR(255) NOT NULL,
+  statusCode INT,
+  sentTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+  responseTime DATETIME,
+  PRIMARY KEY (relID),
+  FOREIGN KEY (statusCode) REFERENCES statusCodes(code)
+);
