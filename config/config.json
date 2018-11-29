@@ -1,21 +1,25 @@
 {
   "development": {
     "username": "root",
-    "password": "l4z4rus123",
+    "password": "YES",
     "database": "todolist",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "l4z4rus123",
+    "password": "YES",
     "database": "todolist",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false
   },
   "production": {
-    "use_env_variable": "JAWSDB_URL",
-    "dialect": "mysql"
+    "username": "root",
+    "password": "YES",
+    "database": "todolist",
+    "host": "localhost",
+    "dialect": "mysql",
+    "logging": false
   }
 }
