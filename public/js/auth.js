@@ -6,26 +6,36 @@ var config = {
   storageBucket: "projectsounders-52f0a.appspot.com",
   messagingSenderId: "488308303654"
 };
+console.log("test");
+
 firebase.initializeApp(config);
 
 var database = firebase.database();
+database;
 
-$("#sign-in-btn").on("click", function(event) {
+$(document).on("click", "#sign-in-btn", function(event) {
   event.preventDefault();
 
   // Grabs user input
-  var email = $("#username-input").val().trim();
-  var password = $("#password-input").val().trim();
-
+  var email = $("#username-input")
+    .val()
+    .trim();
+  var password = $("#password-input")
+    .val()
+    .trim();
   console.log("Before auth");
 
- firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
-  //Success, move to homepage.
-  console.log("logged in!")
-  window.location.href = 'index2.html';
-}).catch(function(error){
-  console.log(error.code);
-  console.log(error.message);
-  alert(error.message);
-});
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then(function() {
+      //Success, move to homepage.
+      console.log("logged in!");
+      window.location.href = "index2.html";
+    })
+    .catch(function(error) {
+      console.log(error.code);
+      console.log(error.message);
+      alert(error.message);
+    });
 });
