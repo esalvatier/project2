@@ -3,6 +3,7 @@
 var fs = require("fs");
 var path = require("path");
 var Sequelize = require("sequelize");
+var nodemailer = require('nodemailer');
 var basename = path.basename(module.filename);
 var env = process.env.NODE_ENV || "development";
 var config = require(__dirname + "/../config/config.json")[env];
@@ -40,3 +41,32 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+
+
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'bootcampproject44@gmail.com',
+    pass: 'YESYESYES'
+  }
+});
+
+var mailOptions = {
+  from: 'bootcampproject44@gmail.com',
+  to: 'dmitrii_zakharov@hotmail.com',
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+
+
+
+
