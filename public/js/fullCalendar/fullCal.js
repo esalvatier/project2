@@ -1,16 +1,25 @@
 $(document).ready(function() {
+  $(".recModal").hide();
+  $(".addModal").hide();
+
   $("#calendar").fullCalendar({
-    eventClick: function(event, element) {
+    eventClick: function(event) {
       console.log("test");
       event.title = "CLICKED!";
-
       // $('#calendar').fullCalendar('updateEvent', event);
     },
     defaultDate: "2018-03-12",
     editable: false,
-    eventLimit: true, // allow "more" link when too many events
-    
-    //Events are added in this object
+    eventClick: function(calEvent, jsEvent, view) {
+      console.log("Event: " + calEvent.title);
+      console.log("Coordinates: " + jsEvent.pageX + "," + jsEvent.pageY);
+      console.log("View: " + view.name);
+      // change the border color just for fun
+      $(this).css("border-color", "red");
+      $(".recModal").show();
+      $(".addModal").show();
+    },
+    eventLimit: true,
     events: [
       {
         title: "All Day Event",
