@@ -8,21 +8,42 @@ $(document).ready(function() {
     defaultDate: "2018-03-12",
     editable: false,
     eventClick: function(calEvent, jsEvent, view) {
-      console.log("Event: " + calEvent.title);
-      console.log("Coordinates: " + jsEvent.pageX + "," + jsEvent.pageY);
+      // console.log("Event: " + calEvent.title);
+      // console.log("Coordinates: " + jsEvent.pageX + "," + jsEvent.pageY);
       console.log("View: " + view.name);
       // change the border color just for fun
+
       $(this).attr("data-toggle", "modal");
       $(this).attr("data-target", ".bd-example-modal-lg");
       $(".modal-content").append("Event: " + calEvent.title);
       $(".modal-content").append("Event: " + calEvent.start);
-      // $(".modal-content").append(
-      //   "Coordinates: " + jsEvent.pageX + "," + jsEvent.pageY
-      // );
-      // $(".modal-content").append("View: " + view.name);
       $(this).css("border-color", "red");
     },
+    eventMouseover: function(calEvent, jsEvent, view) {
+      console.log("Event: " + calEvent.title);
+      console.log("View: " + view.name);
+      console.log("AAAA");
+
+      $(this).css("border-color", "#00427f");
+    },
+    eventMouseout: function(calEvent, jsEvent, view) {
+      $(this).css("border-color", "");
+      console.log("View: " + view.name);
+    },
+    customButtons: {
+      addNewEvent: {
+        text: "Add Event!",
+        click: function() {
+          alert("You added an event!");
+        }
+      }
+    },
+    header: {
+      right: "addNewEvent today prev,next"
+    },
     eventLimit: true,
+    eventColor: "#006acc",
+    eventTextColor: "#ffffff",
     events: [
       {
         title: "All Day Event",
@@ -84,6 +105,5 @@ $(document).ready(function() {
         start: "2018-03-28"
       }
     ]
-    // eventColor: "#ff0000"
   });
 });
