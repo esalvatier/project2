@@ -13,7 +13,7 @@ body {
   z-index: 10; }
 
 .sideBars {
-  height: 96vh; }
+  height: 95vh; }
 
 .row {
   padding: 0;
@@ -39,7 +39,7 @@ body {
 
 .navBarP2 {
   height: 40px;
-  background: linear-gradient(#aaa9a9, #b6b4b4);
+  background: linear-gradient(#aaa9a9, #9b9999);
   z-index: 12;
   -moz-box-shadow: 0 0 4px 0.5px #333333;
   -webkit-box-shadow: 0 0 4px 0.5px #333333;
@@ -49,6 +49,12 @@ body {
 .contentRow {
   z-index: 8;
   border-top: 2px #333; }
+
+#circle1,
+#circle2 {
+  -moz-box-shadow: 0 0 4px 0.2px #333333;
+  -webkit-box-shadow: 0 0 4px 0.2px #333333;
+  box-shadow: 0 0 4px 0.2px #333333; }
 
 #circle1 {
   width: 200px;

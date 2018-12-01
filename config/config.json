@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "YES",
-    "database": "todolist",
+    "database": "eventOrganizerDB",
     "host": "localhost",
     "dialect": "mysql"
   },

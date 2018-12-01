@@ -8,19 +8,19 @@ $(document).ready(function() {
     defaultDate: "2018-03-12",
     editable: false,
     eventClick: function(calEvent, jsEvent, view) {
-      // console.log("Event: " + calEvent.title);
-      // console.log("Coordinates: " + jsEvent.pageX + "," + jsEvent.pageY);
       console.log("View: " + view.name);
-      // change the border color just for fun
 
       $(this).attr("data-toggle", "modal");
       $(this).attr("data-target", ".bd-example-modal-lg");
-      $(".modal-content").append("Event: " + calEvent.title);
-      $(".modal-content").append("Event: " + calEvent.start);
-      $(this).css("border-color", "red");
+      $(".modal-title").append(calEvent.title);
+      $(".modal-body").append(
+        "Start: " + moment(calEvent.start).format("h:mm a")
+      );
+      $(".modal-body").append("End: " + moment(calEvent.end).format("h:mm a"));
+      $(".modal-body").append("All Day: " + calEvent.allDay);
     },
     eventMouseover: function(calEvent, jsEvent, view) {
-      console.log("Event: " + calEvent.title);
+      console.log(calEvent.title);
       console.log("View: " + view.name);
       console.log("AAAA");
 
