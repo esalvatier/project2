@@ -1,3 +1,6 @@
+
+$(document).ready(function() {
+
 var config = {
   apiKey: "AIzaSyBqTcJJ_3u7P6Mg7RXJRgZlzuJcLd8XnnM",
   authDomain: "projectsounders-52f0a.firebaseapp.com",
@@ -61,4 +64,7 @@ $("#sign-up-btn").on("click", function(event) {
       console.log(error.message);
       alert(error.message);
     });
+});
+
+
 });
