@@ -1,14 +1,15 @@
 module.exports = function(sequelize, DataTypes) {
-  var statusCode = sequelize.define("statusCode", {
+  var Status = sequelize.define("Status", {
     code: {
       type: DataTypes.INTEGER,
-      primary: true,
+      primaryKey: true,
       autoIncrement: true
     },
     meaning: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false
     }
   });
-  return statusCode;
+  return Status;
 };

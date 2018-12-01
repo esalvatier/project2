@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     {
       relID: {
         type: DataTypes.INTEGER,
-        primary: true,
+        primaryKey: true,
         autoIncrement: true
       },
       fromUser: {
@@ -14,11 +14,6 @@ module.exports = function(sequelize, DataTypes) {
       targetUser: {
         type: DataTypes.STRING,
         allowNull: false
-      },
-      statusCode: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 1
       }
     },
     {
@@ -27,5 +22,12 @@ module.exports = function(sequelize, DataTypes) {
       updatedAt: "responseTime"
     }
   );
+
+  userRelationship.associate = function(models) {
+    userRelationship.belongsTo(models.Status, {
+      foreignKey: "code",
+      targetKey: "code"
+    });
+  };
   return userRelationship;
 };

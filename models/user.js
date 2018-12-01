@@ -8,7 +8,11 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     lastName: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1, 255]
+      }
     },
     email: {
       type: DataTypes.STRING,
@@ -25,7 +29,8 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   User.associate = function(models) {
-    User.hasMany
-  }
+    User.hasMany(models.Event, { as: "Events" });
+  };
+
   return User;
 };

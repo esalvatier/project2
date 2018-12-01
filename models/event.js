@@ -1,17 +1,25 @@
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
   var Event = sequelize.define("Event", {
     eventID: {
       type: DataTypes.INTEGER,
-      primary: true,
+      primaryKey: true,
       autoIncrement: true
+    },
+    date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
     },
     eventObj: {
       type: DataTypes.JSON
-    },
-    eventOwner: {
-      type: DataTypes.STRING,
-      allowNull: false
     }
   });
+
+  Event.associate = function(models) {
+    Event.belongsTo(models.User, {
+      foreignKey: "eventOwner",
+      targetKey: "uid",
+      allowNull: false
+    });
+  };
   return Event;
 };
