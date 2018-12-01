@@ -43,7 +43,7 @@ $(document).ready(function() {
     },
     eventLimit: true,
     eventColor: "#006acc",
-    eventTextColor: "#ffffff",
+    eventTextColor: "#f0f0f0",
     events: [
       {
         title: "All Day Event",
