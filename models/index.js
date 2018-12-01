@@ -46,34 +46,6 @@ module.exports = db;
 
 
 
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'bootcampproject44@gmail.com',
-    pass: 'YESYESYES'
-  }
-});
-
-var inviteeName = "PLACEHOLDER";
-var eventName = "PLACEHOLDER";
-var eventDate = "PLACEHOLDER";
-var eventTime = "PLACEHOLDER";
-
-var mailOptions = {
-  from: 'bootcampproject44@gmail.com',
-  to: 'dmitrii_zakharov@hotmail.com',
-  subject: 'You are invited!',
-  text: 'Dear '+inviteeName+',\n'+'You are invited to attend '+eventName+' on '+eventDate+' at '+ eventTime+ '\n\nCheers!\nTristan, Mark, Dmitrii' 
-};
-
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
-
 
 
 
