@@ -18,7 +18,6 @@ INSERT INTO user_relationships (from_User, target_User) VALUES ("XrIWklpLSLhP4Cb
 INSERT INTO user_relationships (from_User, target_User) VALUES ("XrIWklpLSLhP4Cbi4667xO5PkvW2", "G452DSFDGghfdfae45bv");
 INSERT INTO user_relationships (from_User, target_User) VALUES ("XrIWklpLSLhP4Cbi4667xO5PkvW2", "G452DSFDGghfdfae45bv");
 INSERT INTO user_relationships (from_User, target_User) VALUES ("XrIWklpLSLhP4Cbi4667xO5PkvW2", "G452DSFDGghfdfae45bv");
-<<<<<<< HEAD
 
 INSERT INTO users (firstName, lastName, email, uid) VALUES ("Mark", "Salvatier", "m.erik.salvatier@gmail.com", "XrIWklpLSLhP4Cbi4667xO5PkvW2");*/
 
@@ -32,5 +31,3 @@ INSERT INTO events (date, eventOwner) VALUES (0,"XrIWklpLSLhP4Cbi4667xO5PkvW2");
 INSERT INTO events (date, eventOwner) VALUES ('9999-12-31',"XrIWklpLSLhP4Cbi4667xO5PkvW2");
 
 INSERT INTO userrelationships (fromUser, targetUser, meaning) VALUES ("XrIWklpLSLhP4Cbi4667xO5PkvW2", "smYWJqFAeXUywbOKxkyNLzBujpT2", "pending");
-=======
->>>>>>> 7139371d16e60ba416ccaaa82079ead71c4b7a9f
