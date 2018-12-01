@@ -1,7 +1,4 @@
 $(document).ready(function() {
-  $(".recModal").hide();
-  $(".addModal").hide();
-
   $("#calendar").fullCalendar({
     eventClick: function(event) {
       console.log("test");
@@ -15,9 +12,15 @@ $(document).ready(function() {
       console.log("Coordinates: " + jsEvent.pageX + "," + jsEvent.pageY);
       console.log("View: " + view.name);
       // change the border color just for fun
+      $(this).attr("data-toggle", "modal");
+      $(this).attr("data-target", ".bd-example-modal-lg");
+      $(".modal-content").append("Event: " + calEvent.title);
+      $(".modal-content").append("Event: " + calEvent.start);
+      // $(".modal-content").append(
+      //   "Coordinates: " + jsEvent.pageX + "," + jsEvent.pageY
+      // );
+      // $(".modal-content").append("View: " + view.name);
       $(this).css("border-color", "red");
-      $(".recModal").show();
-      $(".addModal").show();
     },
     eventLimit: true,
     events: [

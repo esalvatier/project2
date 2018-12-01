@@ -39,7 +39,8 @@ body {
 .navBarP2 {
   height: 40px;
   background: linear-gradient(#aaa9a9, #b6b4b4);
-  z-index: 12; }
+  z-index: 12;
+  border-bottom: 1px #333; }
 
 .contentRow {
   background: linear-gradient(#e9eef0, #f0f5f7);
