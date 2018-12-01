@@ -1,16 +1,28 @@
 $(document).ready(function() {
   $("#calendar").fullCalendar({
-    eventClick: function(event, element) {
+    eventClick: function(event) {
       console.log("test");
       event.title = "CLICKED!";
-
       // $('#calendar').fullCalendar('updateEvent', event);
     },
     defaultDate: "2018-03-12",
     editable: false,
-    eventLimit: true, // allow "more" link when too many events
-    
-    //Events are added in this object
+    eventClick: function(calEvent, jsEvent, view) {
+      console.log("Event: " + calEvent.title);
+      console.log("Coordinates: " + jsEvent.pageX + "," + jsEvent.pageY);
+      console.log("View: " + view.name);
+      // change the border color just for fun
+      $(this).attr("data-toggle", "modal");
+      $(this).attr("data-target", ".bd-example-modal-lg");
+      $(".modal-content").append("Event: " + calEvent.title);
+      $(".modal-content").append("Event: " + calEvent.start);
+      // $(".modal-content").append(
+      //   "Coordinates: " + jsEvent.pageX + "," + jsEvent.pageY
+      // );
+      // $(".modal-content").append("View: " + view.name);
+      $(this).css("border-color", "red");
+    },
+    eventLimit: true,
     events: [
       {
         title: "All Day Event",

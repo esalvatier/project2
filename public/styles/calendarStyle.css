@@ -7,19 +7,73 @@ body {
 #calendar {
   max-width: 900px;
   margin: 0 auto;
-  margin-top: 8vh; }
+  margin-top: 6vh;
+  z-index: 10; }
 
 .sideBars {
-  background-color: lightgray;
-  height: 96vh; }
+  height: 95vh; }
 
 .row {
   padding: 0;
   margin: 0; }
 
-.test {
-  height: 50px; }
+.projectTitle {
+  font-size: 15px;
+  margin-top: 10px;
+  margin-left: 20px; }
 
-/* Full Calendar Buttons */
+.projectTitle:hover {
+  cursor: pointer;
+  color: gray; }
+
+.profileName {
+  float: right;
+  font-size: 15px;
+  margin-top: 10px;
+  margin-right: 20px; }
+
+.profileName:hover {
+  cursor: pointer;
+  color: gray; }
+
+.navBarP2 {
+  height: 40px;
+  background: linear-gradient(#aaa9a9, #b6b4b4);
+  z-index: 12;
+  border-bottom: 1px #333; }
+
+.contentRow {
+  background: linear-gradient(#e9eef0, #f0f5f7);
+  z-index: 8; }
+
+#circle1 {
+  width: 200px;
+  height: 200px;
+  background: orange;
+  border-radius: 0 0 200px 0;
+  -moz-border-radius: 0 0 200px 0;
+  -webkit-border-radius: 0 0 200px 0; }
+
+#circle2 {
+  width: 300px;
+  height: 300px;
+  background: green;
+  border-radius: 0 0 0 300px;
+  -moz-border-radius: 0 0 0 300px;
+  -webkit-border-radius: 0 0 0 300px;
+  float: right; }
+
+.recModal {
+  height: 150px;
+  width: 55px;
+  background-color: lightcoral;
+  z-index: 5; }
+
+.addModal {
+  height: 150px;
+  width: 55px;
+  z-index: 5;
+  background-color: lightcoral;
+  float: right; }
 
 /*# sourceMappingURL=calendarStyle.css.map */

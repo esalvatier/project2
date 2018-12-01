@@ -1,7 +1,7 @@
 @import "fullcalendar.css";
 
 body {
-//   margin: 40px 10px;
+  //   margin: 40px 10px;
   padding: 0;
   font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
   font-size: 14px;
@@ -10,38 +10,88 @@ body {
 #calendar {
   max-width: 900px;
   margin: 0 auto;
-  margin-top: 8vh;;
-//   background-color: lightblue;
+  margin-top: 6vh;
+  z-index: 10;
+  //   background-color: lightblue;
 }
 
-// .navbar {
-//     height: 4vh;
-// }
-
 .sideBars {
-    background-color: lightgray;
-    height: 96vh;
+  height: 95vh;
 }
 
 .row {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
-.test {
-//   background-color: red;
-  height: 50px;
+.projectTitle {
+  font-size: 15px;
+  margin-top: 10px;
+  margin-left: 20px;
 }
 
-/* Full Calendar Buttons */
-.fc-state-default {
-//   background-image: linear-gradient(to bottom, #333, #333);
+.projectTitle:hover {
+  cursor: pointer;
+  color: gray;
 }
 
-.fc-view-container {
-//   background-color: lightblue;
+.profileName {
+  float: right;
+  font-size: 15px;
+  margin-top: 10px;
+  margin-right: 20px;
 }
 
-.fc-toolbar {
-//   background-color: rgba(173, 216, 230, 1);
+.profileName:hover {
+  cursor: pointer;
+  color: gray;
+}
+
+.navBarP2 {
+  height: 40px;
+  background: linear-gradient(rgb(170, 169, 169), rgb(182, 180, 180));
+  z-index: 12;
+  border-bottom: 1px #333;
+  // -moz-box-shadow: 0 0 4px 0.5px #333333;
+  // -webkit-box-shadow: 0 0 4px 0.5px #333333;
+  // box-shadow: 0 0 4px 0.5px #333333;
+}
+
+.contentRow {
+  background: linear-gradient(rgb(233, 238, 240), rgb(240, 245, 247));
+  z-index: 8;
+}
+
+#circle1 {
+  width: 200px;
+  height: 200px;
+  background: orange;
+  border-radius: 0 0 200px 0;
+  -moz-border-radius: 0 0 200px 0;
+  -webkit-border-radius: 0 0 200px 0;
+}
+
+#circle2 {
+  width: 300px;
+  height: 300px;
+  background: green;
+  border-radius: 0 0 0 300px;
+  -moz-border-radius: 0 0 0 300px;
+  -webkit-border-radius: 0 0 0 300px;
+  float: right;
+}
+
+.recModal {
+  height: 150px;
+  width: 55px;
+  background-color: lightcoral;
+  z-index: 5;
+}
+
+.addModal {
+  height: 150px;
+  width: 55px;
+  z-index: 5;
+  background-color: lightcoral;
+  float: right;
 }
