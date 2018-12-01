@@ -6,14 +6,11 @@ var config = {
   storageBucket: "projectsounders-52f0a.appspot.com",
   messagingSenderId: "488308303654"
 };
-console.log("test");
-
 firebase.initializeApp(config);
 
 var database = firebase.database();
-database;
 
-$(document).on("click", "#sign-in-btn", function(event) {
+$("#sign-in-btn").on("click", function(event) {
   event.preventDefault();
 
   // Grabs user input
@@ -23,6 +20,7 @@ $(document).on("click", "#sign-in-btn", function(event) {
   var password = $("#password-input")
     .val()
     .trim();
+
   console.log("Before auth");
 
   firebase
@@ -32,6 +30,31 @@ $(document).on("click", "#sign-in-btn", function(event) {
       //Success, move to homepage.
       console.log("logged in!");
       window.location.href = "index2.html";
+    })
+    .catch(function(error) {
+      console.log(error.code);
+      console.log(error.message);
+      alert(error.message);
+    });
+});
+
+$("#sign-up-btn").on("click", function(event) {
+  event.preventDefault();
+
+  // Grabs user input
+  var email = $("#username-input")
+    .val()
+    .trim();
+  var password = $("#password-input")
+    .val()
+    .trim();
+
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(function() {
+      console.log("signed up");
+      alert("You signed up with e-mail: " + email);
     })
     .catch(function(error) {
       console.log(error.code);

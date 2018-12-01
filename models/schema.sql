@@ -38,18 +38,13 @@ CREATE TABLE userRel (
   FOREIGN KEY (statusCode) REFERENCES statusCodes(code)
 );
 
-/* id INT AUTO_INCREMENT,
-  title VARCHAR(255) NOT NULL,
-  allDay BOOLEAN NOT NULL DEFAULT FALSE,
-  strt_time TIMESTAMP NOT NULL,
-  end_time TIMESTAMP,
-  url VARCHAR(255),
-  className VARCHAR(255),
-  editable,
-  startEditable,
-  durationEditable,
-  resourceEditable,
-  render,
-  overlap,
-  constrain
-  */
+CREATE TABLE userRel (
+  relID BIGINT AUTO_INCREMENT,
+  fromUser VARCHAR(255) NOT NULL,
+  targetUser VARCHAR(255) NOT NULL,
+  statusCode INT,
+  sentTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+  responseTime DATETIME,
+  PRIMARY KEY (relID),
+  FOREIGN KEY (statusCode) REFERENCES statusCodes(code)
+);

@@ -1,0 +1,1 @@
+curl https://www.eventbrite.com/oauth/token -H "Content-Type: application/json" --data '{"grant_type": "authorization_code", "code": "E3HXKGT4QLZPWYHIGQD2", "client_id": "LBENA4453HC2FXYPVU", "client_secret": "G3TWZ52S4DBMRGNONWZKO7IN4UCNXKGNMXAPIOAE3HXKGT4QLZPWYHIGQD2d=LBENA4453HC2FXYPVU", "redirect_uri": "https://github.com/esalvatier/project2", "scope": "read" }' -X POST
