@@ -2,14 +2,14 @@
   "development": {
     "username": "root",
     "password": "YES",
-    "database": "eventOrganizerDB",
+    "database": "eventorganizerdb",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "YES",
-    "database": "todolist",
+    "database": "eventorganizerdb",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false
@@ -17,7 +17,7 @@
   "production": {
     "username": "root",
     "password": "YES",
-    "database": "todolist",
+    "database": "eventorganizerdb",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false
