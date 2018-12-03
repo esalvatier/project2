@@ -22,6 +22,11 @@ $(document).ready(function() {
       var eventStartTime = moment(calEvent.start).format("h:mm a");
       var eventEndTime = moment(calEvent.end).format("h:mm a");
 
+      //Sets timeOfDay to AM or PM option
+      var n = eventStartTime.split(" ");
+      var timeOfDay = n[1];
+      console.log(timeOfDay);
+
       //Title
       $(".modal-title").append("<form class=titleForm></form>");
       $(".titleForm").append(
@@ -57,9 +62,6 @@ $(document).ready(function() {
       $(".modal-body").append(
         "<p class=recommendEvents>Recommendations for Events that start at the same time</p>"
       );
-
-      // $(".editingForm").append("<input class=eventMonth></input>");
-      // $(".allDayCheck").append("Month: " + calEvent.allDay);
     },
     eventMouseover: function() {
       $(this).css("border-color", "#00427f");
@@ -71,7 +73,41 @@ $(document).ready(function() {
       addNewEvent: {
         text: "Add Event!",
         click: function() {
-          alert("You added an event!");
+          $(this).attr("data-toggle", "modal");
+          $(this).attr("data-target", ".bd-example-modal-lg");
+
+          $(".modal-title").text("");
+          $(".modal-body").text("");
+
+          //Title
+          $(".modal-title").append("<form class=titleForm></form>");
+          $(".titleForm").append(
+            "<input class='nameTitle modalInput' type=text></input>"
+          );
+          $(".nameTitle").attr("placeholder", "Enter Event Title Here!");
+
+          //Start Time
+          $(".modal-body").append("<form class=editingForm></form>");
+          $(".editingForm").append(
+            "<input class='startTime modalInput'></input>"
+          );
+          $(".editingForm").append(
+            "<p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>"
+          );
+          $(".startTime").attr("placeholder", "Start Time Here!");
+
+          //End Time
+          $(".editingForm").append(
+            "<input class='endTime modalInput'></input>"
+          );
+          $(".editingForm").append(
+            "<p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>"
+          );
+          $(".endTime").attr("placeholder", "End Time Here!");
+
+          $(".modal-body").append(
+            "<p class=recommendEvents>Recommendations for Events that start at the same time</p>"
+          );
         }
       }
     },
