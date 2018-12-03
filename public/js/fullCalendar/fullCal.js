@@ -7,28 +7,63 @@ $(document).ready(function() {
     },
     defaultDate: "2018-03-12",
     editable: false,
-    eventClick: function(calEvent, jsEvent, view) {
-      console.log("View: " + view.name);
+    //jsEvent and view also return data if passed through function
+    eventClick: function(calEvent) {
+      //Clears contents so each time clicked only selected content appears
+      $(".modal-title").text("");
+      $(".modal-body").text("");
+      console.log(calEvent.source);
 
+      //Gives the clicked event the needed class'/data for it to trigger the modal.  Won't work without these two lines
       $(this).attr("data-toggle", "modal");
       $(this).attr("data-target", ".bd-example-modal-lg");
-      $(".modal-title").append(calEvent.title);
-      $(".modal-body").append(
-        "Start: " + moment(calEvent.start).format("h:mm a")
-      );
-      $(".modal-body").append("End: " + moment(calEvent.end).format("h:mm a"));
-      $(".modal-body").append("All Day: " + calEvent.allDay);
-    },
-    eventMouseover: function(calEvent, jsEvent, view) {
-      console.log(calEvent.title);
-      console.log("View: " + view.name);
-      console.log("AAAA");
 
+      //Time needs to be converted by Moment JS
+      var eventStartTime = moment(calEvent.start).format("h:mm a");
+      var eventEndTime = moment(calEvent.end).format("h:mm a");
+
+      //Title
+      $(".modal-title").append("<form class=titleForm></form>");
+      $(".titleForm").append(
+        "<input class='nameTitle modalInput' type=text></input>"
+      );
+      $(".nameTitle").attr("value", calEvent.title);
+
+      if (calEvent.allDay) {
+        $(".modal-body").append("<p class=allDayCheck></p>");
+        $(".allDayCheck").append("This is an all day event");
+      }
+
+      $(".modal-body").append("<form class=editingForm></form>");
+
+      //Start Time (All events require at least a start time to be valid)
+      $(".editingForm").append("<input class='startTime modalInput'></input>");
+      $(".editingForm").append(
+        "<p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>"
+      );
+      $(".startTime").attr("value", eventStartTime);
+
+      //End Time
+      if (eventEndTime !== "Invalid date") {
+        $(".editingForm").append("<input class='endTime modalInput'></input>");
+        $(".editingForm").append(
+          "<p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>"
+        );
+        $(".endTime").attr("placeholder", eventEndTime);
+      }
+
+      $(".modal-body").append(
+        "<p class=recommendEvents>Recommendations for Events that start at the same time</p>"
+      );
+
+      // $(".editingForm").append("<input class=eventMonth></input>");
+      // $(".allDayCheck").append("Month: " + calEvent.allDay);
+    },
+    eventMouseover: function() {
       $(this).css("border-color", "#00427f");
     },
-    eventMouseout: function(calEvent, jsEvent, view) {
+    eventMouseout: function() {
       $(this).css("border-color", "");
-      console.log("View: " + view.name);
     },
     customButtons: {
       addNewEvent: {
