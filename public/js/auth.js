@@ -1,16 +1,34 @@
 var config = {
-  apiKey: "AIzaSyBqTcJJ_3u7P6Mg7RXJRgZlzuJcLd8XnnM",
-  authDomain: "projectsounders-52f0a.firebaseapp.com",
-  databaseURL: "https://projectsounders-52f0a.firebaseio.com",
-  projectId: "projectsounders-52f0a",
-  storageBucket: "projectsounders-52f0a.appspot.com",
-  messagingSenderId: "488308303654"
+  apiKey: "AIzaSyBL_LaPryoNiAeqDaOxA8TtHCGQqQauH6c",
+  authDomain: "personal-budget-app-5f7f7.firebaseapp.com",
+  databaseURL: "https://personal-budget-app-5f7f7.firebaseio.com",
+  projectId: "personal-budget-app-5f7f7",
+  storageBucket: "personal-budget-app-5f7f7.appspot.com",
+  messagingSenderId: "239802611255"
 };
 firebase.initializeApp(config);
 
-var database = firebase.database();
+function userLoggedIn(dbUID) {
+  $.ajax("/api/user", {
+    method: "GET",
+    data: { uid: dbUID }
+  }).done(function(response) {
+    console.log(response);
+    $("#username-display")
+      .text(response.firstName + " " + response.lastName)
+      .show();
+    $("#username-input").hide();
+    $("#password-input").hide();
+    $("#sign-up-btn").hide();
+    $("#sign-in-btn").hide();
+    $("#log-out-btn").show();
+  });
+}
+// eslint-disable-next-line no-unused-vars
+var localUID = "";
+//var database = firebase.database();
 
-$("#sign-in-btn").on("click", function(event) {
+$(document).on("click", "#sign-in-btn", function(event) {
   event.preventDefault();
 
   // Grabs user input
@@ -29,7 +47,7 @@ $("#sign-in-btn").on("click", function(event) {
     .then(function() {
       //Success, move to homepage.
       console.log("logged in!");
-      window.location.href = "index2.html";
+      userLoggedIn(localUID);
     })
     .catch(function(error) {
       console.log(error.code);
@@ -38,9 +56,8 @@ $("#sign-in-btn").on("click", function(event) {
     });
 });
 
-$("#sign-up-btn").on("click", function(event) {
+$(document).on("click", "#sign-up-btn", function(event) {
   event.preventDefault();
-
   // Grabs user input
   var email = $("#username-input")
     .val()
@@ -48,13 +65,24 @@ $("#sign-up-btn").on("click", function(event) {
   var password = $("#password-input")
     .val()
     .trim();
-
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
-    .then(function() {
+    .then(function(data) {
       console.log("signed up");
+      var newUser = {
+        firstName: "test",
+        lastName: "test2",
+        email: email,
+        uid: data.user.uid
+      };
       alert("You signed up with e-mail: " + email);
+      $.ajax("/api/user", {
+        method: "POST",
+        data: newUser
+      }).done(function() {
+        userLoggedIn(localUID);
+      });
     })
     .catch(function(error) {
       console.log(error.code);
