@@ -32,16 +32,18 @@ $(document).ready(function() {
       if (calEvent.allDay) {
         $(".modal-body").append("<p class=allDayCheck></p>");
         $(".allDayCheck").append("This is an all day event");
+      } else {
+        $(".modal-body").append("<form class=editingForm></form>");
+
+        //Start Time (All events require at least a start time to be valid)
+        $(".editingForm").append(
+          "<input class='startTime modalInput'></input>"
+        );
+        $(".editingForm").append(
+          "<p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>"
+        );
+        $(".startTime").attr("value", eventStartTime);
       }
-
-      $(".modal-body").append("<form class=editingForm></form>");
-
-      //Start Time (All events require at least a start time to be valid)
-      $(".editingForm").append("<input class='startTime modalInput'></input>");
-      $(".editingForm").append(
-        "<p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>"
-      );
-      $(".startTime").attr("value", eventStartTime);
 
       //End Time
       if (eventEndTime !== "Invalid date") {
