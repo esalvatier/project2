@@ -1,5 +1,5 @@
 
-$(document).ready(function() {
+
 
 var config = {
   apiKey: "AIzaSyBL_LaPryoNiAeqDaOxA8TtHCGQqQauH6c",
@@ -113,4 +113,4 @@ $(document).on("click", "#sign-up-btn", function(event) {
 });
 
 
-});
+

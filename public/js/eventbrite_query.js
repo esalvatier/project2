@@ -34,7 +34,6 @@ API.getEvents().then(function(data) {
 
 });
 
-=======
 // var options = {
 //   host: 'www.eventbriteapi.com',
 //   path: '/v3/events/search/?location.address=Seattle&start_date.range_start=2018-11-29T13:00:00Z&start_date.range_end=2018-11-29T18:00:00Z&token=E3HXKGT4QLZPWYHIGQD2'
@@ -79,18 +78,18 @@ API.getEvents().then(function(data) {
 //   }
 // });
 
-request.get(
-  "https://www.eventbriteapi.com/v3/categories/?token=E3HXKGT4QLZPWYHIGQD2",
-  function(err, res, body) {
-    if (err) {
-      console.log("Error: " + err.message);
-    }
-    // if(res.statusCode == 200 ) {
-    console.log(body);
-    for (var i = 0; i < 21; i++) {
-      console.log(JSON.parse(body).categories[i].id);
-      console.log(JSON.parse(body).categories[i].short_name);
-      console.log("\n");
-    }
-  }
-);
+// request.get(
+//   "https://www.eventbriteapi.com/v3/categories/?token=E3HXKGT4QLZPWYHIGQD2",
+//   function(err, res, body) {
+//     if (err) {
+//       console.log("Error: " + err.message);
+//     }
+//     // if(res.statusCode == 200 ) {
+//     console.log(body);
+//     for (var i = 0; i < 21; i++) {
+//       console.log(JSON.parse(body).categories[i].id);
+//       console.log(JSON.parse(body).categories[i].short_name);
+//       console.log("\n");
+//     }
+//   }
+// );
