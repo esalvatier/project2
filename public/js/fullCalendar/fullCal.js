@@ -139,13 +139,15 @@ $(document).ready(function() {
       var nowDate = moment()
         .startOf("month")
         .format("YYYY-MM-DD");
-      $.ajax("/api/event/" + history, {
+      console.log(val);
+      $.ajax("/api/event/" + val, {
         method: "GET",
         data: {
           date: nowDate,
           uid: localUID
         }
-      }).done(function(response) {
+      }).then(function(response) {
+        console.log(response);
         $("#calendar").fullCalendar("removeEvents");
         $("#calendar").fullCalendar("addEventSource", response);
         $("#calendar").fullCalendar("rerenderEvents");
