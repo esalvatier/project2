@@ -1,4 +1,16 @@
 $(document).ready(function() {
+  $(".allDayCheck").hide();
+  $(".startTime").hide();
+  $(".startTimeText").hide();
+  $(".endTime").hide();
+  $(".endTimeText").hide();
+  $(".eventEndDateDay").hide();
+  $(".dateEndTextDay").hide();
+  $(".eventEndDateMonth").hide();
+  $(".dateEndTextMonth").hide();
+  $(".eventEndDateYear").hide();
+  $(".dateEndTextYear").hide();
+
   var val = $("#calendar").data("history");
   console.log(val);
   var defaultStart = moment().format("YYYY-MM-DD");
@@ -109,129 +121,97 @@ $(document).ready(function() {
     eventClick: function(event) {
       console.log("test");
       event.title = "CLICKED!";
-      // $('#calendar').fullCalendar('updateEvent', event);
     },
     defaultDate: defaultStart,
     editable: false,
     //jsEvent and view also return data if passed through function
     eventClick: function(calEvent) {
-      //Clears contents so each time clicked only selected content appears
-      $(".modal-title").text("");
-      $(".modal-body").text("");
-      console.log(calEvent.source);
+      $(".allDayCheck").hide();
+      $(".startTime").hide();
+      $(".startTimeText").hide();
+      $(".endTime").hide();
+      $(".endTimeText").hide();
+      $(".eventEndDateDay").hide();
+      $(".dateEndTextDay").hide();
+      $(".eventEndDateMonth").hide();
+      $(".dateEndTextMonth").hide();
+      $(".eventEndDateYear").hide();
+      $(".dateEndTextYear").hide();
 
-      //Gives the clicked event the needed class'/data for it to trigger the modal.  Won't work without these two lines
+      //Triggers Modal
       $(this).attr("data-toggle", "modal");
       $(this).attr("data-target", ".bd-example-modal-lg");
 
-      //Time needs to be converted by Moment JS
+      //Start Time of click event
       var momentStartTime = moment(calEvent.start).format(
         "YYYY-MM-DDTHH:mm:ss"
       );
-      var momentEndTime = moment(calEvent.end).format("YYYY-MM-DDTHH:mm:ss");
 
-      //Getting date of clicked event
       var n = momentStartTime.split("A");
       var y = n[0];
 
-      var a = momentEndTime.split("A");
-      var b = a[0];
-
       var eventStartTime = n[1];
-      var eventEndTime = b[1];
 
       var eventDate = y.split("-");
       var eventYear = eventDate[0];
       var eventMonth = eventDate[1];
       var eventDay = eventDate[2];
 
-      //Title
-      $(".modal-title").append("<form class=titleForm></form>");
-      $(".titleForm").append(
-        "<input class='nameTitle modalInput' type=text></input>"
-      );
+      //End Time of click event
+      var momentEndTime = moment(calEvent.end).format("YYYY-MM-DDTHH:mm:ss");
+
+      var a = momentEndTime.split("A");
+      var b = a[0];
+
+      var eventEndTime = b[1];
+
+      var eventEndDate = b.split("-");
+      var eventEndYear = eventEndDate[0];
+      var eventEndMonth = eventEndDate[1];
+      var eventEndDay = eventEndDate[2];
+
+      //Event Title
       $(".nameTitle").attr("value", calEvent.title);
 
-      $(".modal-body").append("<form class=dateEdit></form>");
-
       //Day
-      $(".dateEdit").append("<input class='eventDateDay modalInput'></input>");
-      $(".dateEdit").append("<p class='dateTextDay modalText'>Start Day</p>");
-      console.log(eventDay);
       $(".eventDateDay").attr("value", eventDay);
 
       //Month
-      $(".dateEdit").append(
-        "<input class='eventDateMonth modalInput'></input>"
-      );
-      $(".dateEdit").append(
-        "<p class='dateTextMonth modalText'>Start Month</p>"
-      );
-      console.log(eventMonth);
       $(".eventDateMonth").attr("value", eventMonth);
 
       //Year
-      $(".dateEdit").append("<input class='eventDateYear modalInput'></input>");
-      $(".dateEdit").append("<p class='dateTextYear modalText'>Start Year</p>");
-      console.log(eventYear);
       $(".eventDateYear").attr("value", eventYear);
 
       if (calEvent.allDay) {
-        $(".modal-body").append("<p class=allDayCheck></p>");
-        $(".allDayCheck").append("This is an all day event");
+        $(".allDayCheck").show();
       } else {
-        $(".modal-body").append("<form class=editingForm></form>");
-
-        //Start Time (All events require at least a start time to be valid)
-        $(".editingForm").append(
-          "<input class='startTime modalInput'></input>"
-        );
-        $(".editingForm").append(
-          "<p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>"
-        );
+        $(".allDayCheck").hide();
+        $(".startTime").show();
+        $(".startTimeText").show();
         $(".startTime").attr("value", eventStartTime);
       }
 
       //End Time
-      if (eventEndTime !== "Invalid date") {
-        $(".editingForm").append("<input class='endTime modalInput'></input>");
-        $(".editingForm").append(
-          "<p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>"
-        );
+      if (eventEndYear !== "Invalid date") {
+        $(".endTime").show();
+        $(".endTimeText").show();
         $(".endTime").attr("placeholder", eventEndTime);
 
-        var eventEndDate = b.split("-");
-        var eventEndYear = eventEndDate[0];
-        var eventEndMonth = eventEndDate[1];
-        var eventEndDay = eventEndDate[2];
-
         //Day
-        $(".dateEdit").append(
-          "<input class='eventEndDateDay modalInput'></input>"
-        );
-        $(".dateEdit").append("<p class='dateTextDay modalText'>End Day</p>");
+        $(".eventEndDateDay").show();
+        $(".dateEndTextDay").show();
         $(".eventEndDateDay").attr("value", eventEndDay);
 
         //Month
-        $(".dateEdit").append(
-          "<input class='eventEndDateMonth modalInput'></input>"
-        );
-        $(".dateEdit").append(
-          "<p class='dateTextMonth modalText'>End Month</p>"
-        );
+        $(".eventEndDateMonth").show();
+        $(".dateEndTextMonth").show();
         $(".eventEndDateMonth").attr("value", eventEndMonth);
 
         //Year
-        $(".dateEdit").append(
-          "<input class='eventEndDateYear modalInput'></input>"
-        );
-        $(".dateEdit").append("<p class='dateTextYear modalText'>End Year</p>");
+        $(".eventEndDateYear").show();
+        $(".dateEndTextYear").show();
         $(".eventEndDateYear").attr("value", eventEndYear);
       }
-
-      $(".modal-body").append(
-        "<p class=recommendEvents>Recommendations for Events that start at the same time</p>"
-      );
 
       var eventStartTimeForEventbrite = moment(calEvent.start).format(
         "YYYY-MM-DD"
@@ -248,8 +228,8 @@ $(document).ready(function() {
         eventStartTimeForEventbrite + "T" + eventStartTimeForEventbrite2 + "Z";
 
       //format the URL
-      var url =
-        "https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&start_date.range_start=";
+      // var url =
+      ("https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&start_date.range_start=");
       url += eventStartTimeForEventbrite3;
       url += "&start_date.range_end=";
       url += eventEndTimeForEventbrite3;
@@ -294,9 +274,6 @@ $(document).ready(function() {
           $(".modal-body").append("<br>");
         }
       });
-
-      // $(".editingForm").append("<input class=eventMonth></input>");
-      // $(".allDayCheck").append("Month: " + calEvent.allDay);
     },
     eventMouseover: function() {
       $(this).css("border-color", "#00427f");
