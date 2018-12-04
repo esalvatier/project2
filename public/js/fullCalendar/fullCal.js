@@ -1,11 +1,117 @@
 $(document).ready(function() {
+  var val = $("#calendar").data("history");
+  console.log(val);
+  var defaultStart = moment().format("YYYY-MM-DD");
+  var resources = [
+    {
+      title: "All Day Event",
+      start: defaultStart,
+      startEditable: true
+    },
+    {
+      title: "Long Event",
+      start: moment(defaultStart)
+        .add(6, "days")
+        .format("YYYY-MM-DD"),
+      end: moment(defaultStart)
+        .add(9, "days")
+        .format("YYYY-MM-DD")
+    },
+    {
+      id: 999,
+      title: "Repeating Event",
+      start: moment(defaultStart)
+        .add(8, "days")
+        .add(16, "hours")
+        .format("YYYY-MM-DDTHH:mm:ss")
+    },
+    {
+      id: 999,
+      title: "Repeating Event",
+      start: moment(defaultStart)
+        .add(15, "days")
+        .add(16, "hours")
+        .format("YYYY-MM-DDTHH:mm:ss")
+    },
+    {
+      title: "Conference",
+      start: moment(defaultStart)
+        .add(10, "days")
+        .format("YYYY-MM-DD"),
+      end: moment(defaultStart)
+        .add(12, "days")
+        .format("YYYY-MM-DD")
+    },
+    {
+      title: "Meeting",
+      start: moment(defaultStart)
+        .add(11, "days")
+        .add(10, "hours")
+        .format("YYYY-MM-DDTHH:mm:ss"),
+      end: moment(defaultStart)
+        .add(11, "days")
+        .add(12, "hours")
+        .format("YYYY-MM-DDTHH:mm:ss")
+    },
+    {
+      title: "Lunch",
+      start: moment(defaultStart)
+        .add(11, "days")
+        .add(12, "hours")
+        .format("YYYY-MM-DDTHH:mm:ss")
+    },
+    {
+      title: "Meeting",
+      start: moment(defaultStart)
+        .add(11, "days")
+        .add(14, "hours")
+        .add(30, "minutes")
+        .format("YYYY-MM-DDTHH:mm:ss")
+    },
+    {
+      title: "Happy Hour",
+      start: moment(defaultStart)
+        .add(11, "days")
+        .add(17, "hours")
+        .add(30, "minutes")
+        .format("YYYY-MM-DDTHH:mm:ss")
+    },
+    {
+      title: "Dinner",
+      start: moment(defaultStart)
+        .add(11, "days")
+        .add(20, "hours")
+        .add(30, "minutes")
+        .format("YYYY-MM-DDTHH:mm:ss")
+    },
+    {
+      title: "TestEvent1",
+      start: moment(defaultStart)
+        .add(12, "days")
+        .add(7, "hours")
+        .format("YYYY-MM-DDTHH:mm:ss")
+    },
+    {
+      title: "Event2",
+      start: moment(defaultStart)
+        .add(12, "days")
+        .add(7, "hours")
+        .format("YYYY-MM-DDTHH:mm:ss")
+    },
+    {
+      title: "Click for Google",
+      url: "http://google.com/",
+      start: moment(defaultStart).add(27, "days")
+    }
+  ];
+
   $("#calendar").fullCalendar({
     eventClick: function(event) {
       console.log("test");
       event.title = "CLICKED!";
       // $('#calendar').fullCalendar('updateEvent', event);
     },
-    defaultDate: "2018-03-12",
+    defaultDate: defaultStart,
     editable: false,
     //jsEvent and view also return data if passed through function
     eventClick: function(calEvent) {
@@ -81,66 +187,37 @@ $(document).ready(function() {
     eventLimit: true,
     eventColor: "#006acc",
     eventTextColor: "#f0f0f0",
-    events: [
-      {
-        title: "All Day Event",
-        start: "2018-03-01",
-        startEditable: true
-      },
-      {
-        title: "Long Event",
-        start: "2018-03-07",
-        end: "2018-03-10"
-      },
-      {
-        id: 999,
-        title: "Repeating Event",
-        start: "2018-03-09T16:00:00"
-      },
-      {
-        id: 999,
-        title: "Repeating Event",
-        start: "2018-03-16T16:00:00"
-      },
-      {
-        title: "Conference",
-        start: "2018-03-11",
-        end: "2018-03-13"
-      },
-      {
-        title: "Meeting",
-        start: "2018-03-12T10:30:00",
-        end: "2018-03-12T12:30:00"
-      },
-      {
-        title: "Lunch",
-        start: "2018-03-12T12:00:00"
-      },
-      {
-        title: "Meeting",
-        start: "2018-03-12T14:30:00"
-      },
-      {
-        title: "Happy Hour",
-        start: "2018-03-12T17:30:00"
-      },
-      {
-        title: "Dinner",
-        start: "2018-03-12T20:00:00"
-      },
-      {
-        title: "TestEvent1",
-        start: "2018-03-13T07:00:00"
-      },
-      {
-        title: "Event2",
-        start: "2018-03-13T07:00:00"
-      },
-      {
-        title: "Click for Google",
-        url: "http://google.com/",
-        start: "2018-03-28"
-      }
-    ]
+    events: resources
+  });
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      localUID = user.uid;
+      var nowDate = moment()
+        .startOf("month")
+        .format("YYYY-MM-DD");
+      $.ajax("/api/event/" + history, {
+        method: "GET",
+        data: {
+          date: nowDate,
+          uid: localUID
+        }
+      }).done(function(response) {
+        $("#calendar").fullCalendar("removeEvents");
+        $("#calendar").fullCalendar("addEventSource", response);
+        $("#calendar").fullCalendar("rerenderEvents");
+        $("#calendar").fullCalendar("refetchEvents");
+        userLoggedIn(localUID);
+      });
+    }
+  });
+
+  $(document.body).on("click", "#log-out-btn", function(event) {
+    event.preventDefault();
+    userLoggedOut();
+    $("#calendar").fullCalendar("removeEvents");
+    $("#calendar").fullCalendar("addEventSource", resources);
+    $("#calendar").fullCalendar("rerenderEvents");
+    $("#calendar").fullCalendar("refetchEvents");
   });
 });
