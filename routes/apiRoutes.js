@@ -1,20 +1,23 @@
 var db = require("../models");
 var Op = db.Sequelize.Op;
+function traverseResponse(response) {
+
+};
 
 module.exports = function(app) {
   app.get("/api/event/true", function(req, res) {
     var date = req.query.date;
     var uid = req.query.uid;
-      db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.lt]: date} }}}).then(function(dbExamples) {
-        res.json(dbExamples);
+      db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.lt]: date} }}}).then(function(dbResponse) {
+        res.json(dbResponse);
       });
   });
 
   app.get("/api/event/false", function(req, res) {
     var date = req.query.date;
     var uid = req.query.uid;
-      db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.gte]: date} }}}).then(function(dbExamples) {
-        res.json(dbExamples);
+      db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.gte]: date} }}}).then(function(dbRespone) {
+        res.json(dbResponse);
       });
   });
 

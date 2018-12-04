@@ -21,7 +21,7 @@ function userLoggedIn(dbUID) {
     $("#user-dropdown").show();
     $("#username-input").hide();
     $("#password-input").hide();
-    $("#sign-up-btn").hide();
+    $("#sign-up").hide();
     $("#sign-in-btn").hide();
     $("#log-out-btn").show();
   });
@@ -37,7 +37,7 @@ function userLoggedOut() {
       $("#user-dropdown").show();
       $("#username-input").show();
       $("#password-input").show();
-      $("#sign-up-btn").show();
+      $("#sign-up").show();
       $("#sign-in-btn").show();
       $("#log-out-btn").hide();
     })
@@ -77,39 +77,53 @@ $(document).on("click", "#sign-in-btn", function(event) {
     });
 });
 
-$(document).on("click", "#sign-up-btn", function(event) {
+$(document).on("click", "#register-btn", function(event) {
   event.preventDefault();
   // Grabs user input
-  var email = $("#username-input")
+  var email = $("#email")
     .val()
     .trim();
-  var password = $("#password-input")
+  var password = $("#password")
     .val()
     .trim();
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(function(data) {
-      console.log("signed up");
-      var newUser = {
-        firstName: "test",
-        lastName: "test2",
-        email: email,
-        uid: data.user.uid
-      };
-      alert("You signed up with e-mail: " + email);
-      $.ajax("/api/user", {
-        method: "POST",
-        data: newUser
-      }).done(function() {
-        userLoggedIn(localUID);
+  var confirm = $("#confirm")
+    .val()
+    .trim();
+  var firstName = $("#first-name")
+    .val()
+    .trim();
+  var lastName = $("#last-name")
+    .val()
+    .trim();
+
+  if (confirm !== password || firstName === "" || lastName === "") {
+    $("#sign-fail-modal").modal("show");
+  } else {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(function(data) {
+        console.log("signed up");
+        var newUser = {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          uid: data.user.uid
+        };
+        alert("You signed up with e-mail: " + email);
+        $.ajax("/api/user", {
+          method: "POST",
+          data: newUser
+        }).done(function() {
+          userLoggedIn(localUID);
+        });
+      })
+      .catch(function(error) {
+        console.log(error.code);
+        console.log(error.message);
+        alert(error.message);
       });
-    })
-    .catch(function(error) {
-      console.log(error.code);
-      console.log(error.message);
-      alert(error.message);
-    });
+  }
 });
 
 

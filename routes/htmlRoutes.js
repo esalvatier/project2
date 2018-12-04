@@ -13,8 +13,13 @@ module.exports = function(app) {
       });
     });
   });
+
   app.get("/history", function(req, res) {
     res.render("history");
+  });
+  
+  app.get("/signup", function(req, res) {
+    res.render("signup");
   });
 
   // Load example page and pass in an example by id
