@@ -2,19 +2,26 @@ var db = require("../models");
 var Op = db.Sequelize.Op;
 
 module.exports = function(app) {
-  app.get("/api/event/:uid", function(req, res) {
-    var uid = req.params.uid;
-    db.Event.findAll({ where: { eventOwner: uid } }).then(function(dbExamples) {
-      res.json(dbExamples);
-    });
+  app.get("/api/event/true", function(req, res) {
+    var date = req.query.date;
+    var uid = req.query.uid;
+      db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.lt]: date} }}}).then(function(dbExamples) {
+        res.json(dbExamples);
+      });
+  });
+
+  app.get("/api/event/false", function(req, res) {
+    var date = req.query.date;
+    var uid = req.query.uid;
+      db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.gte]: date} }}}).then(function(dbExamples) {
+        res.json(dbExamples);
+      });
   });
 
   app.get("/api/friend/:uid", function(req, res) {
     var uid = req.params.uid;
     db.userRelationship
-      .findAll({ where: { [Op.and]:{[Op.or]: [{ fromUser: uid }, {targetUser: uid} ], [Op.not]: {code: 3}} 
-    
-      }, include: [db.Status] 
+      .findAll({ where: { [Op.and]:{[Op.or]: [{ fromUser: uid }, {targetUser: uid} ], [Op.not]: {code: 3}}, include: [db.Status] }
       })
       .then(function(dbExample) {
         res.json(dbExample);
@@ -27,6 +34,14 @@ module.exports = function(app) {
       res.json(dbExample);
     });
   });
+
+  app.get("/api/user", function(req, res) {
+    console.log(req.query);
+    db.User.findOne({where: {uid: req.query.uid}}).then(function(dbExample) {
+      res.json(dbExample);
+    });
+  });
+
 
   app.post("/api/event", function(req, res) {
     db.Event.create(req.body).then(function(dbExample) {
