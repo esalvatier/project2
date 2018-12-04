@@ -39,23 +39,21 @@
 //     console.log("events.events[1].description.text: " + events.events[1].description.text);
 //     console.log("events.events[1].url: " + events.events[1].url);
 
-
 //   }
 // });
 
-request.get('https://www.eventbriteapi.com/v3/categories/?token=E3HXKGT4QLZPWYHIGQD2', function(err,res,body){
-  if(err) {
-    console.log ("Error: "+err.message);
-  }
-  // if(res.statusCode == 200 ) {
+request.get(
+  "https://www.eventbriteapi.com/v3/categories/?token=E3HXKGT4QLZPWYHIGQD2",
+  function(err, res, body) {
+    if (err) {
+      console.log("Error: " + err.message);
+    }
+    // if(res.statusCode == 200 ) {
     console.log(body);
-    for (var i=0; i<21; i++) {
+    for (var i = 0; i < 21; i++) {
       console.log(JSON.parse(body).categories[i].id);
       console.log(JSON.parse(body).categories[i].short_name);
       console.log("\n");
     }
-    
-
-
-  
-});
+  }
+);
