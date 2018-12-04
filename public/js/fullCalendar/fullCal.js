@@ -157,27 +157,10 @@ $(document).ready(function() {
 
   $(document.body).on("click", "#log-out-btn", function(event) {
     event.preventDefault();
-    localUID = "";
-    user = undefined;
-    firebase
-      .auth()
-      .signOut()
-      .then(function() {
-        $("#username-display")
-          .empty()
-          .hide();
-        $("#username-input").show();
-        $("#password-input").show();
-        $("#sign-up-btn").show();
-        $("#sign-in-btn").show();
-        $("#log-out-btn").hide();
-        $("#calendar").fullCalendar("removeEvents");
-        $("#calendar").fullCalendar("addEventSource", resources);
-        $("#calendar").fullCalendar("rerenderEvents");
-        $("#calendar").fullCalendar("refetchEvents");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    userLoggedOut();
+    $("#calendar").fullCalendar("removeEvents");
+    $("#calendar").fullCalendar("addEventSource", resources);
+    $("#calendar").fullCalendar("rerenderEvents");
+    $("#calendar").fullCalendar("refetchEvents");
   });
 });

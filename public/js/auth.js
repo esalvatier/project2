@@ -14,15 +14,33 @@ function userLoggedIn(dbUID) {
     data: { uid: dbUID }
   }).done(function(response) {
     console.log(response);
-    $("#username-display")
-      .text(response.firstName + " " + response.lastName)
-      .show();
+    $("#username-display").text(response.firstName + " " + response.lastName);
+    $("#user-dropdown").show();
     $("#username-input").hide();
     $("#password-input").hide();
     $("#sign-up-btn").hide();
     $("#sign-in-btn").hide();
     $("#log-out-btn").show();
   });
+}
+
+function userLoggedOut() {
+  localUID = "";
+  firebase
+    .auth()
+    .signOut()
+    .then(function() {
+      $("#username-display").empty();
+      $("#user-dropdown").show();
+      $("#username-input").show();
+      $("#password-input").show();
+      $("#sign-up-btn").show();
+      $("#sign-in-btn").show();
+      $("#log-out-btn").hide();
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
 }
 // eslint-disable-next-line no-unused-vars
 var localUID = "";
