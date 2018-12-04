@@ -28,8 +28,22 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/events", function(req, res) {
+
+    res.render("events");
+  });
+
+  app.get("/sign-in", function(req, res) {
+    
+    res.render("sign-in");
+  });
+
+
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
   });
+
+
+
 };

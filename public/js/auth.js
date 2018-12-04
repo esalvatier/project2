@@ -1,3 +1,6 @@
+
+
+
 var config = {
   apiKey: "AIzaSyBL_LaPryoNiAeqDaOxA8TtHCGQqQauH6c",
   authDomain: "personal-budget-app-5f7f7.firebaseapp.com",
@@ -108,3 +111,6 @@ $(document).on("click", "#sign-up-btn", function(event) {
       alert(error.message);
     });
 });
+
+
+
