@@ -125,8 +125,25 @@ $(document).ready(function() {
       $(this).attr("data-target", ".bd-example-modal-lg");
 
       //Time needs to be converted by Moment JS
-      var eventStartTime = moment(calEvent.start).format("h:mm a");
-      var eventEndTime = moment(calEvent.end).format("h:mm a");
+      var momentStartTime = moment(calEvent.start).format(
+        "YYYY-MM-DDTHH:mm:ss"
+      );
+      var momentEndTime = moment(calEvent.end).format("YYYY-MM-DDTHH:mm:ss");
+
+      //Getting date of clicked event
+      var n = momentStartTime.split("A");
+      var y = n[0];
+
+      var a = momentEndTime.split("A");
+      var b = a[0];
+
+      var eventStartTime = n[1];
+      var eventEndTime = b[1];
+
+      var eventDate = y.split("-");
+      var eventYear = eventDate[0];
+      var eventMonth = eventDate[1];
+      var eventDay = eventDate[2];
 
       //Title
       $(".modal-title").append("<form class=titleForm></form>");
@@ -134,6 +151,30 @@ $(document).ready(function() {
         "<input class='nameTitle modalInput' type=text></input>"
       );
       $(".nameTitle").attr("value", calEvent.title);
+
+      $(".modal-body").append("<form class=dateEdit></form>");
+
+      //Day
+      $(".dateEdit").append("<input class='eventDateDay modalInput'></input>");
+      $(".dateEdit").append("<p class='dateTextDay modalText'>Start Day</p>");
+      console.log(eventDay);
+      $(".eventDateDay").attr("value", eventDay);
+
+      //Month
+      $(".dateEdit").append(
+        "<input class='eventDateMonth modalInput'></input>"
+      );
+      $(".dateEdit").append(
+        "<p class='dateTextMonth modalText'>Start Month</p>"
+      );
+      console.log(eventMonth);
+      $(".eventDateMonth").attr("value", eventMonth);
+
+      //Year
+      $(".dateEdit").append("<input class='eventDateYear modalInput'></input>");
+      $(".dateEdit").append("<p class='dateTextYear modalText'>Start Year</p>");
+      console.log(eventYear);
+      $(".eventDateYear").attr("value", eventYear);
 
       if (calEvent.allDay) {
         $(".modal-body").append("<p class=allDayCheck></p>");
@@ -158,26 +199,62 @@ $(document).ready(function() {
           "<p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>"
         );
         $(".endTime").attr("placeholder", eventEndTime);
+
+        var eventEndDate = b.split("-");
+        var eventEndYear = eventEndDate[0];
+        var eventEndMonth = eventEndDate[1];
+        var eventEndDay = eventEndDate[2];
+
+        //Day
+        $(".dateEdit").append(
+          "<input class='eventEndDateDay modalInput'></input>"
+        );
+        $(".dateEdit").append("<p class='dateTextDay modalText'>End Day</p>");
+        $(".eventEndDateDay").attr("value", eventEndDay);
+
+        //Month
+        $(".dateEdit").append(
+          "<input class='eventEndDateMonth modalInput'></input>"
+        );
+        $(".dateEdit").append(
+          "<p class='dateTextMonth modalText'>End Month</p>"
+        );
+        $(".eventEndDateMonth").attr("value", eventEndMonth);
+
+        //Year
+        $(".dateEdit").append(
+          "<input class='eventEndDateYear modalInput'></input>"
+        );
+        $(".dateEdit").append("<p class='dateTextYear modalText'>End Year</p>");
+        $(".eventEndDateYear").attr("value", eventEndYear);
       }
 
       $(".modal-body").append(
         "<p class=recommendEvents>Recommendations for Events that start at the same time</p>"
       );
 
-      var eventStartTimeForEventbrite = moment(calEvent.start).format("YYYY-MM-DD");
-      var eventStartTimeForEventbrite2 = moment(calEvent.start).format("HH:mm:ss");
-      var eventStartTimeForEventbrite3 = eventStartTimeForEventbrite+"T"+eventStartTimeForEventbrite2+"Z";
-      
+      var eventStartTimeForEventbrite = moment(calEvent.start).format(
+        "YYYY-MM-DD"
+      );
+      var eventStartTimeForEventbrite2 = moment(calEvent.start).format(
+        "HH:mm:ss"
+      );
+      var eventStartTimeForEventbrite3 =
+        eventStartTimeForEventbrite + "T" + eventStartTimeForEventbrite2 + "Z";
+
       var eventEndTimeForEventbrite = moment(calEvent.end).format("YYYY-MM-DD");
       var eventEndTimeForEventbrite2 = moment(calEvent.end).format("HH:mm:ss");
-      var eventEndTimeForEventbrite3 = eventStartTimeForEventbrite+"T"+eventStartTimeForEventbrite2+"Z";
+      var eventEndTimeForEventbrite3 =
+        eventStartTimeForEventbrite + "T" + eventStartTimeForEventbrite2 + "Z";
 
       //format the URL
-      var url = "https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&start_date.range_start=";
+      var url =
+        "https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&start_date.range_start=";
       url += eventStartTimeForEventbrite3;
       url += "&start_date.range_end=";
       url += eventEndTimeForEventbrite3;
-      url += "&categories=103,113,105,104,108,107,102,109,110,111,114,115,116,106,117,118,119&token=E3HXKGT4QLZPWYHIGQD2";
+      url +=
+        "&categories=103,113,105,104,108,107,102,109,110,111,114,115,116,106,117,118,119&token=E3HXKGT4QLZPWYHIGQD2";
       console.log("URL: " + url);
 
       //call into eventbrite API
@@ -187,40 +264,36 @@ $(document).ready(function() {
             url: url,
             type: "GET"
           });
-        },
+        }
       };
-      
+
       API.getEvents().then(function(events) {
         console.log(events);
         //var events = JSON.parse(data);
         console.log("Parsed JSON: " + events);
         var count = events.pagination.object_count;
         console.log("count: " + count);
- 
-        for (var i=0; i<count; i++) {
+
+        for (var i = 0; i < count; i++) {
           console.log("Name: " + events.events[i].name.text);
           $(".modal-body").append(
-            "<p class=recommendEvents>Name:"+events.events[i].name.text+"</p>"
+            "<p class=recommendEvents>Name:" +
+              events.events[i].name.text +
+              "</p>"
           );
           console.log("Url: " + events.events[i].url);
           console.log("\n");
           $(".modal-body").append(
-            "<p class=recommendEvents>URL: <a href="+events.events[i].url+" target=\"_blank\""+">"+events.events[i].url+"</a></p>"
+            "<p class=recommendEvents>URL: <a href=" +
+              events.events[i].url +
+              ' target="_blank"' +
+              ">" +
+              events.events[i].url +
+              "</a></p>"
           );
-          $(".modal-body").append(
-            "<br>"
-          );
+          $(".modal-body").append("<br>");
         }
-
-
-      
-      
       });
-
-
-        
-      
-      
 
       // $(".editingForm").append("<input class=eventMonth></input>");
       // $(".allDayCheck").append("Month: " + calEvent.allDay);
@@ -235,7 +308,41 @@ $(document).ready(function() {
       addNewEvent: {
         text: "Add Event!",
         click: function() {
-          alert("You added an event!");
+          $(this).attr("data-toggle", "modal");
+          $(this).attr("data-target", ".bd-example-modal-lg");
+
+          $(".modal-title").text("");
+          $(".modal-body").text("");
+
+          //Title
+          $(".modal-title").append("<form class=titleForm></form>");
+          $(".titleForm").append(
+            "<input class='nameTitle modalInput' type=text></input>"
+          );
+          $(".nameTitle").attr("placeholder", "Enter Event Title Here!");
+
+          //Start Time
+          $(".modal-body").append("<form class=editingForm></form>");
+          $(".editingForm").append(
+            "<input class='startTime modalInput'></input>"
+          );
+          $(".editingForm").append(
+            "<p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>"
+          );
+          $(".startTime").attr("placeholder", "Start Time Here!");
+
+          //End Time
+          $(".editingForm").append(
+            "<input class='endTime modalInput'></input>"
+          );
+          $(".editingForm").append(
+            "<p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>"
+          );
+          $(".endTime").attr("placeholder", "End Time Here!");
+
+          $(".modal-body").append(
+            "<p class=recommendEvents>Recommendations for Events that start at the same time</p>"
+          );
         }
       }
     },
