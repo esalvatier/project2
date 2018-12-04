@@ -16,6 +16,7 @@ function userLoggedIn(dbUID) {
     console.log(response);
     $("#username-display").text(response.firstName + " " + response.lastName);
     $("#user-dropdown").show();
+    $("#user-display").show();
     $("#username-input").hide();
     $("#password-input").hide();
     $("#sign-up").hide();
@@ -31,7 +32,7 @@ function userLoggedOut() {
     .signOut()
     .then(function() {
       $("#username-display").empty();
-      $("#user-dropdown").show();
+      $("#user-dropdown").hide();
       $("#username-input").show();
       $("#password-input").show();
       $("#sign-up").show();
