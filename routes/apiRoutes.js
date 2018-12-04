@@ -1,7 +1,12 @@
 var db = require("../models");
 var Op = db.Sequelize.Op;
 function traverseResponse(response) {
-
+  var data = [];
+  response.forEach(function(element) {
+    
+    data.push(element.dataValues.eventObj);
+  });
+  return data;
 };
 
 module.exports = function(app) {
@@ -9,15 +14,15 @@ module.exports = function(app) {
     var date = req.query.date;
     var uid = req.query.uid;
       db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.lt]: date} }}}).then(function(dbResponse) {
-        res.json(dbResponse);
+        res.json(traverseResponse(dbResponse));
       });
   });
 
   app.get("/api/event/false", function(req, res) {
     var date = req.query.date;
     var uid = req.query.uid;
-      db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.gte]: date} }}}).then(function(dbRespone) {
-        res.json(dbResponse);
+      db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.gte]: date} }}}).then(function(dbResponse) {
+        res.json(traverseResponse(dbResponse));
       });
   });
 

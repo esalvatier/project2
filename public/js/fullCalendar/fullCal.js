@@ -347,6 +347,12 @@ $(document).ready(function() {
         }
       }).then(function(response) {
         console.log(response);
+        var source = [];
+        response.forEach(function(elem) {
+          console.log(typeof elem);
+          console.log(elem);
+          source.push(JSON.parse(elem));
+        })
         $("#calendar").fullCalendar("removeEvents");
         $("#calendar").fullCalendar("addEventSource", response);
         $("#calendar").fullCalendar("rerenderEvents");
