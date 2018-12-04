@@ -1,40 +1,65 @@
-<<<<<<< HEAD
-<div class="row no-gutters">
-  <div class="col-lg-12 navBarP2">
-    <span class="projectTitle">Project 2 Event</span>
-    <span class="profileName">LOGGED_IN_USER</span>
-  </div>
-</div>
-=======
->>>>>>> d8ba04b1181f08edf23f36abc562fc7cbd70c0d8
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  {{> nav/navbar}}  
-</nav> 
-{{!-- For Login --}} {{!-- Project Title, Home, Profile, Username, Password, Login, Create Account --}} {{!--
-Already Signed in --}} {{!-- Project Title, Profile, Username --}}
+  {{> nav/navbar}}
+</nav>
 
-    {{!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      {{> events/display-event}}
-    </div> --}}
 <div class="row contentRow no-gutters">
   <div class="col-lg-3 sideBars">
     <div id="circle1"></div>
   </div>
   <div class="col-lg-6 centerContent">
+    {{!-- Calendar --}}
     <div id="calendar" data-history="false"></div>
-
-
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <h5 class="modal-title" id="exampleModalLabel">
+              <form class="titleForm">
+                <input class='nameTitle modalInput' type=text></input>
+              </form>
+            </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
+            <form class="dateEdit">
+
+              {{!-- All Day Notice --}}
+              <p class="allDayCheck">This is an all day event</p>
+
+              {{!-- Start Day --}}
+              <input class='eventDateDay modalInput'></input>
+              <p class='dateTextDay modalText'>Start Day</p>
+              {{!-- Start Month --}}
+              <input class='eventDateMonth modalInput'></input>
+              <p class='dateTextMonth modalText'>Start Month</p>
+              {{!-- Start Year --}}
+              <input class='eventDateYear modalInput'></input>
+              <p class='dateTextYear modalText'>Start Year</p>
+
+              {{!-- End Day --}}
+              <input class='eventEndDateDay modalInput'></input>
+              <p class='dateEndTextDay modalText'>End Day</p>
+              {{!-- End Month --}}
+              <input class='eventEndDateMonth modalInput'></input>
+              <p class='dateEndTextMonth modalText'>End Month</p>
+              {{!-- End Year --}}
+              <input class='eventEndDateYear modalInput'></input>
+              <p class='dateEndTextYear modalText'>End Year</p>
+
+              {{!-- Times --}}
+              <form class="editingForm">
+                {{!-- Start Time --}}
+                <input class='startTime modalInput'></input>
+                <p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>
+                {{!-- End Time --}}
+                <input class='endTime modalInput'></input>
+                <p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>
+              </form>
+            </form>
+
+            <p class="recommendEvents">Recommendations for Events that start at the same time</p>
 
           </div>
           <div class="modal-footer">
