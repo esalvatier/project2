@@ -96,8 +96,31 @@ $(document).on("click", "#register-btn", function(event) {
     .val()
     .trim();
 
-  if (confirm !== password || firstName === "" || lastName === "") {
+  if (password === "" || confirm === "" || confirm !== password || firstName === "" || lastName === "" || email === "") {
+
+    var text = "";
+
+    if (firstName === "") {
+      text += "<p>You need to specify a valid first name.</p>";
+    }
+    if (lastName === "") {
+      text += "<p>You need to specify a valid last name.</p>";
+    }
+    if (email === "") {
+      text += "<p>You need to specify a valid e-mail.</p>";
+    }
+    if (password === "") {
+      text += "<p>You need to specify a valid password.</p>";
+    }
+    if (confirm === "") {
+      text += "<p>You need to confirm the password.</p>";
+    }
+    if (password !== confirm) {
+      text += "<p>Passwords don't match.</p>";
+    }
+    $(".modal-body").html(text);
     $("#sign-fail-modal").modal("show");
+
   } else {
     firebase
       .auth()
