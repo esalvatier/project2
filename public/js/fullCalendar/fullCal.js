@@ -140,7 +140,7 @@ $(document).ready(function() {
 
       //Triggers Modal
       $(this).attr("data-toggle", "modal");
-      $(this).attr("data-target", ".bd-example-modal-lg");
+      $(this).attr("data-target", ".bd-edit-modal-lg");
 
       //Start Time of click event
       var momentStartTime = moment(calEvent.start).format(
@@ -286,40 +286,47 @@ $(document).ready(function() {
         text: "Add Event!",
         click: function() {
           $(this).attr("data-toggle", "modal");
-          $(this).attr("data-target", ".bd-example-modal-lg");
+          $(this).attr("data-target", ".bd-addEvent-modal-lg");
 
-          $(".modal-title").text("");
-          $(".modal-body").text("");
+          //Reset's typed text in modal
+          $(".modal").on("hidden.bs.modal", function() {
+            $(this)
+              .find("form")[0]
+              .reset();
+          });
 
           //Title
-          $(".modal-title").append("<form class=titleForm></form>");
-          $(".titleForm").append(
-            "<input class='nameTitle modalInput' type=text></input>"
+          $(".addEventTitle").attr("placeholder", "Enter Event Title Here!");
+
+          //Start Day
+          $(".addEventDateDay").attr("placeholder", "Enter Start Day Here!");
+
+          //Start Month
+          $(".addEventDateMonth").attr(
+            "placeholder",
+            "Enter Start Month Here!"
           );
-          $(".nameTitle").attr("placeholder", "Enter Event Title Here!");
+
+          //Start Year
+          $(".addEventDateYear").attr("placeholder", "Enter Start Year Here!");
+
+          //End Day
+          $(".addEventEndDateDay").attr("placeholder", "Enter End Day Here!");
+
+          //End Month
+          $(".addEventEndDateMonth").attr(
+            "placeholder",
+            "Enter End Month Here!"
+          );
+
+          //End Year
+          $(".addEventEndDateYear").attr("placeholder", "Enter End Year Here!");
 
           //Start Time
-          $(".modal-body").append("<form class=editingForm></form>");
-          $(".editingForm").append(
-            "<input class='startTime modalInput'></input>"
-          );
-          $(".editingForm").append(
-            "<p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>"
-          );
-          $(".startTime").attr("placeholder", "Start Time Here!");
+          $(".addEventStartTime").attr("placeholder", "Start Time Here!");
 
           //End Time
-          $(".editingForm").append(
-            "<input class='endTime modalInput'></input>"
-          );
-          $(".editingForm").append(
-            "<p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>"
-          );
-          $(".endTime").attr("placeholder", "End Time Here!");
-
-          $(".modal-body").append(
-            "<p class=recommendEvents>Recommendations for Events that start at the same time</p>"
-          );
+          $(".addEventEndTime").attr("placeholder", "End Time Here!");
         }
       }
     },
@@ -352,7 +359,7 @@ $(document).ready(function() {
           console.log(typeof elem);
           console.log(elem);
           source.push(JSON.parse(elem));
-        })
+        });
         $("#calendar").fullCalendar("removeEvents");
         $("#calendar").fullCalendar("addEventSource", response);
         $("#calendar").fullCalendar("rerenderEvents");
