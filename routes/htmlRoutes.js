@@ -6,21 +6,18 @@ module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
     db.Example.findAll({}).then(function(dbExamples) {
-      res.render("index", {
-        msg: "Welcome!",
-        examples: dbExamples,
-        script: script
-      });
+      res.render("index");
     });
   });
 
   app.get("/history", function(req, res) {
     res.render("history");
   });
-  
+
   app.get("/signup", function(req, res) {
     res.render("signup");
   });
+
   app.get("/friends", function(req, res) {
     res.render("friends");
   });

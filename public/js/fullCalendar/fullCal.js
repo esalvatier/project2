@@ -178,6 +178,9 @@ $(document).ready(function() {
         text: "Add Event!",
         click: function() {
           alert("You added an event!");
+          $.ajax("/api/event", {
+            method: "POST"
+          });
         }
       }
     },
@@ -207,12 +210,12 @@ $(document).ready(function() {
         console.log(response);
         var source = [];
         response.forEach(function(elem) {
-          console.log(typeof elem);
-          console.log(elem);
+          console.log(typeof JSON.parse(elem));
+          console.log(JSON.parse(elem));
           source.push(JSON.parse(elem));
-        })
+        });
         $("#calendar").fullCalendar("removeEvents");
-        $("#calendar").fullCalendar("addEventSource", response);
+        $("#calendar").fullCalendar("addEventSource", source);
         $("#calendar").fullCalendar("rerenderEvents");
         $("#calendar").fullCalendar("refetchEvents");
         userLoggedIn(localUID);
