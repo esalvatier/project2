@@ -7,9 +7,76 @@
     <div id="circle1"></div>
   </div>
   <div class="col-lg-6 centerContent">
-    {{!-- Calendar --}}
+    {{!-- Add Event Modal --}} {{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large
+      modal
+    </button> --}}
+
+    <div class="modal fade bd-addEvent-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabelAdd" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content addEventContent">
+          <div class="modal-header addEventHeader">
+            <!-- Add Event Title -->
+            <h5 class="modal-title" id="exampleModalLabel">
+              <form class="addEventTitleForm">
+                <input class='addEventTitle modalInput' type="text"></input>
+              </form>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body addEventBody">
+            <form class="addEventForm">
+
+              {{!-- All Day Notice --}}
+              <p class="allDayCheck">This is an all day event</p>
+
+              {{!-- Start Day --}}
+              <input class='addEventDateDay modalInput'></input>
+              <p class='addDateTextDay modalText'>Start Day</p>
+              {{!-- Start Month --}}
+              <input class='addEventDateMonth modalInput'></input>
+              <p class='addDateTextMonth modalText'>Start Month</p>
+              {{!-- Start Year --}}
+              <input class='addEventDateYear modalInput'></input>
+              <p class='addDateTextYear modalText'>Start Year</p>
+
+              {{!-- End Day --}}
+              <input class='addEventEndDateDay modalInput'></input>
+              <p class='addDateEndTextDay modalText'>End Day</p>
+              {{!-- End Month --}}
+              <input class='addEventEndDateMonth modalInput'></input>
+              <p class='addDateEndTextMonth modalText'>End Month</p>
+              {{!-- End Year --}}
+              <input class='addEventEndDateYear modalInput'></input>
+              <p class='addDateEndTextYear modalText'>End Year</p>
+
+              <!-- Start Time -->
+              <input class='addEventStartTime modalInput'></input>
+              <p class='addEventStartTimeText modalText'>Start Time (Format must be (HH:mm) </p>
+
+              <!-- End Time -->
+              <input class='addEventEndTime modalInput'></input>
+              <p class='addEventEndTimeText modalText'>End Time (Format must be (HH:mm)</p>
+            </form>
+
+            <p class="recommendEvents">Recommendations for Events that start at the same time</p>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    {{!-- Edit/View Existing Modal --}} {{!-- Calendar --}}
     <div id="calendar" data-history="false"></div>
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
