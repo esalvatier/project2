@@ -133,6 +133,7 @@ $(document).on("click", "#register-btn", function(event) {
         var newUser = {
           firstName: firstName,
           lastName: lastName,
+          fullName: firstName + " " + lastName,
           email: email,
           uid: data.user.uid
         };
