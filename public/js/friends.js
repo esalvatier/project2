@@ -14,7 +14,9 @@ var API = {
 // refreshFriends gets new friends from the db and repopulates the list
 var refreshFriends = function() {
   console.log("BEFORE API CALL");
-  API.getFriends("0GE3xvI4fHTbsWH5ZebWMoBVM5v2").then(function(data) {
+  console.log("localUID: " + localUID);
+
+  API.getFriends(localUID).then(function(data) {
 
     console.log("data: " + data);
 
@@ -25,7 +27,7 @@ var refreshFriends = function() {
       
 
       var $a = $("<a>")
-        .text(friend.firstName)
+        .text(friend.firstName + " " + friend.lastName)
 
       var $li = $("<li>")
         .attr({
@@ -46,4 +48,10 @@ var refreshFriends = function() {
   });
 };
 
-refreshFriends();
+firebase.auth().onAuthStateChanged(function(user){
+
+  if (user) {
+    refreshFriends();
+  }
+
+});

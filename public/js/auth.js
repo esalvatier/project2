@@ -151,4 +151,13 @@ $(document).on("click", "#register-btn", function(event) {
 });
 
 
+firebase.auth().onAuthStateChanged(function(user){
+  console.log("user: " + user);
+  if (user) {
+    localUID = user.uid;
+    console.log("localUID: " + localUID);
+    userLoggedIn(localUID);
+  }
+});
+
 
