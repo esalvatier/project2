@@ -313,7 +313,6 @@ $(document).ready(function() {
           uid: localUID
         }
       }).then(function(response) {
-        console.log(response);
         var source = [];
         response.forEach(function(elem) {
           source.push(JSON.parse(elem));
