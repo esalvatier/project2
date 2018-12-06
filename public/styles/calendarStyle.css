@@ -77,4 +77,8 @@ body {
 .modalText {
   color: #333333; }
 
+#editEventStartTime,
+#editEventEndTime {
+  margin-top: 10px; }
+
 /*# sourceMappingURL=calendarStyle.css.map */

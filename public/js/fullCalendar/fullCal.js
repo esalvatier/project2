@@ -114,6 +114,7 @@ $(document).ready(function() {
     },
     defaultDate: defaultStart,
     editable: false,
+
     //jsEvent and view also return data if passed through function
     eventClick: function(calEvent) {
       $(".allDayCheck").hide();
@@ -154,6 +155,7 @@ $(document).ready(function() {
       $("#editEventStart").attr("value", eventStartDate);
       $("#editEventStartTime").attr("value", eventStartTime);
 
+      //All Day Check
       if (calEvent.allDay) {
         $(".allDayCheck").show();
       } else {
@@ -325,7 +327,7 @@ $(document).on("click", "#addEventBtn", function(event) {
   var descrip = $("#eventDescription")
     .val()
     .trim();
-    
+
   var eventStart = start + "T";
   var eventEnd = "";
   if (strtTime === "") {
