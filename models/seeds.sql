@@ -21,7 +21,7 @@ INSERT INTO user_relationships (from_User, target_User) VALUES ("XrIWklpLSLhP4Cb
 
 INSERT INTO users (firstName, lastName, email, uid) VALUES ("Mark", "Salvatier", "m.erik.salvatier@gmail.com", "XrIWklpLSLhP4Cbi4667xO5PkvW2");*/
 
-INSERT INTO users (firstName, lastName, email, uid) VALUES ("John", "bob", "fakeemail@fake.net", "smYWJqFAeXUywbOKxkyNLzBujpT2");
+INSERT INTO users (firstName, lastName, fullName, email, uid) VALUES ("John", "bob", "John bob", "fakeemail@fake.net", "smYWJqFAeXUywbOKxkyNLzBujpT2");
 INSERT INTO statuses (meaning, createdAt, updatedAt) VALUE ("pending", '9999-12-31', '9999-12-31');
 INSERT INTO statuses (meaning) VALUE ("accepted");
 INSERT INTO statuses (meaning) VALUE ("rejected");
