@@ -27,14 +27,50 @@ module.exports = function(app) {
   });
 
   app.get("/api/friend/:uid", function(req, res) {
+    
     var uid = req.params.uid;
+
+    console.log("uid: " + uid);
+
     db.userRelationship
-      .findAll({ where: { [Op.and]:{[Op.or]: [{ fromUser: uid }, {targetUser: uid} ], [Op.not]: {code: 3}}, include: [db.Status] }
-      })
+      .findAll(
+        { 
+          where: 
+          { 
+            [Op.and]:
+            { [Op.or]: 
+              [
+                { fromUser: uid }, {targetUser: uid} 
+              ], 
+              [Op.not]: {code: 3}} //, include: [db.status]
+            } 
+        }
+      )
       .then(function(dbExample) {
-        res.json(dbExample);
+
+        console.log("dbExample.targetUser: " + dbExample.targetUser);
+
+        dbExample.map(function(relationship) {
+
+        db.User.findAll(
+          {
+            where:
+            {
+              uid: relationship.targetUser
+            }
+          }
+        )
+        .then(function(userFound) {
+          console.log("userFound: " + userFound);
+          res.json(userFound);
+        });
+
       });
-  });
+
+      });
+
+    });
+
 
   // Create a new example
   app.post("/api/user", function(req, res) {
