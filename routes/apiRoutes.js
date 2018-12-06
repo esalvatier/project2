@@ -29,10 +29,8 @@ module.exports = function(app) {
   });
 
   app.get("/api/friend/:uid", function(req, res) {
-    
-    var uid = req.params.uid;
 
-    console.log("uid: " + uid);
+    var uid = req.params.uid;
 
     db.userRelationship
       .findAll(
@@ -44,36 +42,24 @@ module.exports = function(app) {
               [
                 { fromUser: uid }, {targetUser: uid} 
               ], 
-              [Op.not]: {code: 3}} //, include: [db.status]
+              [Op.not]: {code: 3}}
             } 
         }
       )
-      .then(function(dbExample) {
-
-        console.log("dbExample: " + dbExample);
-
-        dbExample.map(function(relationship) {
-
-        console.log("relationship: " + relationship);
-        console.log(relationship);
-
-        db.User.findAll(
-          {
-            where:
-            {
-              uid: relationship.targetUser
-            }
+      .then(function(dbResponse) {
+        var responseObj = {
+          friends: [],
+          requests: []
+        };
+        dbResponse.forEach(function(elem) {
+          if (elem.dataValues.fromUser === uid && elem.dataValues.code === 2) {
+            responseObj.friends.push(elem.dataValues);
+          } else if (elem.dataValues.fromUser !== uid && elem.dataValues.code === 1) {
+            responseObj.requests.push(elem.dataValues);
           }
-        )
-        .then(function(userFound) {
-          console.log("userFound: " + userFound);
-          res.json(userFound);
         });
-
-      });
-
-      });
-
+        res.json(responseObj);
+      })
     });
 
 
