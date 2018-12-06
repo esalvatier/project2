@@ -1,6 +1,3 @@
-
-
-
 var config = {
   apiKey: "AIzaSyBL_LaPryoNiAeqDaOxA8TtHCGQqQauH6c",
   authDomain: "personal-budget-app-5f7f7.firebaseapp.com",
@@ -97,8 +94,14 @@ $(document).on("click", "#register-btn", function(event) {
     .val()
     .trim();
 
-  if (password === "" || confirm === "" || confirm !== password || firstName === "" || lastName === "" || email === "") {
-
+  if (
+    password === "" ||
+    confirm === "" ||
+    confirm !== password ||
+    firstName === "" ||
+    lastName === "" ||
+    email === ""
+  ) {
     var text = "";
 
     if (firstName === "") {
@@ -121,7 +124,6 @@ $(document).on("click", "#register-btn", function(event) {
     }
     $(".modal-body").html(text);
     $("#sign-fail-modal").modal("show");
-
   } else {
     firebase
       .auth()
