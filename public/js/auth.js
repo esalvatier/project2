@@ -151,3 +151,18 @@ $(document).on("click", "#register-btn", function(event) {
       });
   }
 });
+<<<<<<< HEAD
+=======
+
+
+firebase.auth().onAuthStateChanged(function(user){
+  console.log("user: " + user);
+  if (user) {
+    localUID = user.uid;
+    console.log("localUID: " + localUID);
+    userLoggedIn(localUID);
+  }
+});
+
+
+>>>>>>> 7d815b84eea462dec45ae4af87978d331346e9d5
