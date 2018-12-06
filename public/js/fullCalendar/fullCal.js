@@ -1,4 +1,16 @@
 $(document).ready(function() {
+  $(".allDayCheck").hide();
+  $(".startTime").hide();
+  $(".startTimeText").hide();
+  $(".endTime").hide();
+  $(".endTimeText").hide();
+  $(".eventEndDateDay").hide();
+  $(".dateEndTextDay").hide();
+  $(".eventEndDateMonth").hide();
+  $(".dateEndTextMonth").hide();
+  $(".eventEndDateYear").hide();
+  $(".dateEndTextYear").hide();
+
   var val = $("#calendar").data("history");
   console.log(val);
   var defaultStart = moment().format("YYYY-MM-DD");
@@ -109,63 +121,159 @@ $(document).ready(function() {
     eventClick: function(event) {
       console.log("test");
       event.title = "CLICKED!";
-      // $('#calendar').fullCalendar('updateEvent', event);
     },
     defaultDate: defaultStart,
     editable: false,
     //jsEvent and view also return data if passed through function
     eventClick: function(calEvent) {
-      //Clears contents so each time clicked only selected content appears
-      $(".modal-title").text("");
-      $(".modal-body").text("");
-      console.log(calEvent.source);
+      $(".allDayCheck").hide();
+      $(".startTime").hide();
+      $(".startTimeText").hide();
+      $(".endTime").hide();
+      $(".endTimeText").hide();
+      $(".eventEndDateDay").hide();
+      $(".dateEndTextDay").hide();
+      $(".eventEndDateMonth").hide();
+      $(".dateEndTextMonth").hide();
+      $(".eventEndDateYear").hide();
+      $(".dateEndTextYear").hide();
 
-      //Gives the clicked event the needed class'/data for it to trigger the modal.  Won't work without these two lines
+      //Triggers Modal
       $(this).attr("data-toggle", "modal");
-      $(this).attr("data-target", ".bd-example-modal-lg");
+      $(this).attr("data-target", ".bd-edit-modal-lg");
 
-      //Time needs to be converted by Moment JS
-      var eventStartTime = moment(calEvent.start).format("h:mm a");
-      var eventEndTime = moment(calEvent.end).format("h:mm a");
-
-      //Title
-      $(".modal-title").append("<form class=titleForm></form>");
-      $(".titleForm").append(
-        "<input class='nameTitle modalInput' type=text></input>"
+      //Start Time of click event
+      var momentStartTime = moment(calEvent.start).format(
+        "YYYY-MM-DDTHH:mm:ss"
       );
+
+      var n = momentStartTime.split("A");
+      var y = n[0];
+
+      var eventStartTime = n[1];
+
+      var eventDate = y.split("-");
+      var eventYear = eventDate[0];
+      var eventMonth = eventDate[1];
+      var eventDay = eventDate[2];
+
+      //End Time of click event
+      var momentEndTime = moment(calEvent.end).format("YYYY-MM-DDTHH:mm:ss");
+
+      var a = momentEndTime.split("A");
+      var b = a[0];
+
+      var eventEndTime = b[1];
+
+      var eventEndDate = b.split("-");
+      var eventEndYear = eventEndDate[0];
+      var eventEndMonth = eventEndDate[1];
+      var eventEndDay = eventEndDate[2];
+
+      //Event Title
       $(".nameTitle").attr("value", calEvent.title);
 
-      if (calEvent.allDay) {
-        $(".modal-body").append("<p class=allDayCheck></p>");
-        $(".allDayCheck").append("This is an all day event");
-      } else {
-        $(".modal-body").append("<form class=editingForm></form>");
+      //Day
+      $(".eventDateDay").attr("value", eventDay);
 
-        //Start Time (All events require at least a start time to be valid)
-        $(".editingForm").append(
-          "<input class='startTime modalInput'></input>"
-        );
-        $(".editingForm").append(
-          "<p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>"
-        );
+      //Month
+      $(".eventDateMonth").attr("value", eventMonth);
+
+      //Year
+      $(".eventDateYear").attr("value", eventYear);
+
+      if (calEvent.allDay) {
+        $(".allDayCheck").show();
+      } else {
+        $(".allDayCheck").hide();
+        $(".startTime").show();
+        $(".startTimeText").show();
         $(".startTime").attr("value", eventStartTime);
       }
 
       //End Time
-      if (eventEndTime !== "Invalid date") {
-        $(".editingForm").append("<input class='endTime modalInput'></input>");
-        $(".editingForm").append(
-          "<p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>"
-        );
+      if (eventEndYear !== "Invalid date") {
+        $(".endTime").show();
+        $(".endTimeText").show();
         $(".endTime").attr("placeholder", eventEndTime);
+
+        //Day
+        $(".eventEndDateDay").show();
+        $(".dateEndTextDay").show();
+        $(".eventEndDateDay").attr("value", eventEndDay);
+
+        //Month
+        $(".eventEndDateMonth").show();
+        $(".dateEndTextMonth").show();
+        $(".eventEndDateMonth").attr("value", eventEndMonth);
+
+        //Year
+        $(".eventEndDateYear").show();
+        $(".dateEndTextYear").show();
+        $(".eventEndDateYear").attr("value", eventEndYear);
       }
 
-      $(".modal-body").append(
-        "<p class=recommendEvents>Recommendations for Events that start at the same time</p>"
+      var eventStartTimeForEventbrite = moment(calEvent.start).format(
+        "YYYY-MM-DD"
       );
+      var eventStartTimeForEventbrite2 = moment(calEvent.start).format(
+        "HH:mm:ss"
+      );
+      var eventStartTimeForEventbrite3 =
+        eventStartTimeForEventbrite + "T" + eventStartTimeForEventbrite2 + "Z";
 
-      // $(".editingForm").append("<input class=eventMonth></input>");
-      // $(".allDayCheck").append("Month: " + calEvent.allDay);
+      var eventEndTimeForEventbrite = moment(calEvent.end).format("YYYY-MM-DD");
+      var eventEndTimeForEventbrite2 = moment(calEvent.end).format("HH:mm:ss");
+      var eventEndTimeForEventbrite3 =
+        eventStartTimeForEventbrite + "T" + eventStartTimeForEventbrite2 + "Z";
+
+      //format the URL
+      // var url =
+      ("https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&start_date.range_start=");
+      url += eventStartTimeForEventbrite3;
+      url += "&start_date.range_end=";
+      url += eventEndTimeForEventbrite3;
+      url +=
+        "&categories=103,113,105,104,108,107,102,109,110,111,114,115,116,106,117,118,119&token=E3HXKGT4QLZPWYHIGQD2";
+      console.log("URL: " + url);
+
+      //call into eventbrite API
+      var API = {
+        getEvents: function() {
+          return $.ajax({
+            url: url,
+            type: "GET"
+          });
+        }
+      };
+
+      API.getEvents().then(function(events) {
+        console.log(events);
+        //var events = JSON.parse(data);
+        console.log("Parsed JSON: " + events);
+        var count = events.pagination.object_count;
+        console.log("count: " + count);
+
+        for (var i = 0; i < count; i++) {
+          console.log("Name: " + events.events[i].name.text);
+          $(".modal-body").append(
+            "<p class=recommendEvents>Name:" +
+              events.events[i].name.text +
+              "</p>"
+          );
+          console.log("Url: " + events.events[i].url);
+          console.log("\n");
+          $(".modal-body").append(
+            "<p class=recommendEvents>URL: <a href=" +
+              events.events[i].url +
+              " target=\"_blank\"" +
+              ">" +
+              events.events[i].url +
+              "</a></p>"
+          );
+          $(".modal-body").append("<br>");
+        }
+      });
     },
     eventMouseover: function() {
       $(this).css("border-color", "#00427f");
@@ -177,9 +285,48 @@ $(document).ready(function() {
       addNewEvent: {
         text: "Add Event!",
         click: function() {
-          alert("You added an event!");
-          $.ajax("/api/event", {
-            method: "POST"
+          $(this).attr("data-toggle", "modal");
+          $(this).attr("data-target", ".bd-addEvent-modal-lg");
+
+          //Reset's typed text in modal
+          $(".modal").on("hidden.bs.modal", function() {
+            $(this)
+              .find("form")[0]
+              .reset();
+          });
+          $(document).on("click", "#addEventBtn", function(event) {
+            event.preventDefault();
+            var title = $("#addEventTitle")
+              .val()
+              .trim();
+
+            var strtTime = $("#addEventStartTime").val();
+            var endTime = $("#addEventEndTime").val();
+
+            var start = $("#addEventStart")
+              .val()
+              .trim();
+            var end = $("#addEventEnd")
+              .val()
+              .trim();
+            var allDay = $("#allDayCheck").val();
+            // var eventStart = moment(start + "T" + strtTime).format(
+            //  "YYYY-MM-DDTHH:mm:ss"
+            // );
+            // var eventEnd = moment(end + "T" + endTime).format(
+            //   "YYYY-MM-DDTHH:mm:ss"
+            // );
+            console.log(
+              "Start Date: " +
+                start +
+                " Time: " +
+                strtTime +
+                " | End Date: " +
+                end +
+                " Time: " +
+                " All Day: " +
+                allDay
+            );
           });
         }
       }
@@ -210,8 +357,6 @@ $(document).ready(function() {
         console.log(response);
         var source = [];
         response.forEach(function(elem) {
-          console.log(typeof JSON.parse(elem));
-          console.log(JSON.parse(elem));
           source.push(JSON.parse(elem));
         });
         $("#calendar").fullCalendar("removeEvents");

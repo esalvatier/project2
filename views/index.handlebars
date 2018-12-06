@@ -1,35 +1,126 @@
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  {{> nav/navbar}}  
-</nav> 
-{{!-- For Login --}} {{!-- Project Title, Home, Profile, Username, Password, Login, Create Account --}} {{!--
-Already Signed in --}} {{!-- Project Title, Profile, Username --}}
+  {{> nav/navbar}}
+</nav>
 
-    {{!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      {{> events/display-event}}
-    </div> --}}
 <div class="row contentRow no-gutters">
   <div class="col-lg-3 sideBars">
     <div id="circle1"></div>
   </div>
   <div class="col-lg-6 centerContent">
+    {{!-- Add Event Modal --}} {{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large
+      modal
+    </button> --}}
+
+    <div class="modal fade bd-addEvent-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabelAdd" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content addEventContent">
+          <div class="modal-header addEventHeader">
+            <!-- Add Event Title -->
+            <h5 class="modal-title" id="exampleModalLabel">
+              <form class="addEventTitleForm">
+                <label for="addEventTitle">Title:</label>
+                <input class='addEventTitle modalInput' type="text" id="addEventTitle"></input>
+              </form>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body addEventBody">
+            <form id="addEventForm">
+              {{!-- Start Date --}}
+              <div class="form-group"> 
+                <label for="addEventStart">Start Date</label>
+                <input type="date" class="form-control modalInput" id="addEventStart"></input>
+                <label for="addEventStartTime">Start Time</label>
+                <input type="time" class="addEventStartTime modalInput" id="addEventStartTime" required></input>
+              </div>
+              <div class="form-group">
+                {{!-- End Day --}}
+                <label for="addEventEnd">End Date</label>
+                <input type="date" class="form-control modalInput" id="addEventEnd"></input> 
+                <label for="addEventEndTime">End Time</label>
+                <input type="time" class="addEventEndTime modalInput" id="addEventEndTime"></input>
+              </div>
+              <div class="form-group">
+                <label for="allDayCheck">All Day Event</label>
+                <input type="checkbox" class="addEventDateDay modalInput" id="allDayCheck"></input>
+              </div>
+            
+              <div class="form-group">
+                <label for="eventDescription">Description:</label>
+                <input type="text" id="eventDescription">
+              </div>
+            </form>
+
+            <p class="recommendEvents">Recommendations for Events that start at the same time</p>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="addEventBtn">Add Event</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    {{!-- Edit/View Existing Modal --}} {{!-- Calendar --}}
     <div id="calendar" data-history="false"></div>
-
-
-    {{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
-    --}}
-
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <h5 class="modal-title" id="exampleModalLabel">
+              <form class="titleForm">
+                <input class='nameTitle modalInput' type=text></input>
+              </form>
+            </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            
+            <form class="dateEdit">
+
+              {{!-- All Day Notice --}}
+              <p class="allDayCheck">This is an all day event</p>
+
+              {{!-- Start Day --}}
+              <input class='eventDateDay modalInput'></input>
+              <p class='dateTextDay modalText'>Start Day</p>
+              {{!-- Start Month --}}
+              <input class='eventDateMonth modalInput'></input>
+              <p class='dateTextMonth modalText'>Start Month</p>
+              {{!-- Start Year --}}
+              <input class='eventDateYear modalInput'></input>
+              <p class='dateTextYear modalText'>Start Year</p>
+
+              {{!-- End Day --}}
+              <input class='eventEndDateDay modalInput'></input>
+              <p class='dateEndTextDay modalText'>End Day</p>
+              {{!-- End Month --}}
+              <input class='eventEndDateMonth modalInput'></input>
+              <p class='dateEndTextMonth modalText'>End Month</p>
+              {{!-- End Year --}}
+              <input class='eventEndDateYear modalInput'></input>
+              <p class='dateEndTextYear modalText'>End Year</p>
+
+              {{!-- Times --}}
+              <form class="editingForm">
+                {{!-- Start Time --}}
+                <input class='startTime modalInput'></input>
+                <p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>
+                {{!-- End Time --}}
+                <input class='endTime modalInput'></input>
+                <p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>
+              </form>
+            </form>
+
+            <p class="recommendEvents">Recommendations for Events that start at the same time</p>
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -39,8 +130,8 @@ Already Signed in --}} {{!-- Project Title, Profile, Username --}}
       </div>
     </div>
   </div>
-  
-    <div class="col-lg-3 sideBars">
+
+  <div class="col-lg-3 sideBars">
     <div id="circle2"></div>
   </div>
 </div>
