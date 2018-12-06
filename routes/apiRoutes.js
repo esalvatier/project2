@@ -48,9 +48,12 @@ module.exports = function(app) {
       )
       .then(function(dbExample) {
 
-        console.log("dbExample.targetUser: " + dbExample.targetUser);
+        console.log("dbExample: " + dbExample);
 
         dbExample.map(function(relationship) {
+
+        console.log("relationship: " + relationship);
+        console.log(relationship);
 
         db.User.findAll(
           {
