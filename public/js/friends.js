@@ -1,5 +1,4 @@
 // Get references to page elements
-var $friendsList = $(".friends");
 
 // The API object contains methods for each kind of request we'll make
 var API = {
@@ -17,41 +16,41 @@ var refreshFriends = function() {
   console.log("localUID: " + localUID);
 
   API.getFriends(localUID).then(function(data) {
+    console.log(data);
 
-    console.log("data: " + data);
-
-    var $friends = data.map(function(friend) {
-
-      console.log("friend: " + friend);
-      console.log("friend.firstName: " + friend.firstName);
-      
-
-      var $a = $("<a>")
-        .text(friend.firstName + " " + friend.lastName)
-
+    data.requests.forEach(function(request) {
+      $.ajax("/api/user", {
+        method: "GET",
+        data: { uid: request.fromUser }
+      }).done(function(response) {
+        console.log(response);
       var $li = $("<li>")
         .attr({
           class: "list-group-item",
-          "data-id": friend.id
-        })
-        .append($a);
-      return $li;
+          "data-id": request.id
+        }).text(response.fullName)
+        $("#requests").append($li);
       });
-
-    console.log("Before append");
-    console.log("$friendsList: " + $friendsList);
-    console.log("$friends.data: " + $friends);
-    //$friendsList.empty();
-    //$("#friends-display").html("BLAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-    $("#friends").append($friends);
-    //$("#friends-display").hide();
+    });
+    data.friends.forEach(function(friends) {
+      $.ajax("/api/user", {
+        method: "GET",
+        data: { uid: friends.targetUser }
+      }).done(function(response) {
+        console.log(response);
+      var $li = $("<li>")
+        .attr({
+          class: "list-group-item",
+          "data-id": friends.id
+        }).text(response.fullName)
+        $("#friends").append($li);
+      });
+    });
   });
 };
 
-firebase.auth().onAuthStateChanged(function(user){
-
+firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     refreshFriends();
   }
-
 });
