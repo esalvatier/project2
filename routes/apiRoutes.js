@@ -1,4 +1,6 @@
 var db = require("../models");
+var nodemailer = require("nodemailer");
+
 var Op = db.Sequelize.Op;
 function procResp(response) {
   var data = [];
@@ -128,4 +130,36 @@ module.exports = function(app) {
       res.json(dbExample);
     });
   });
+
+
+app.post("/api/email", function(req, res) {
+  var email = req.body.email;
+  
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'bootcampproject44@gmail.com',
+      pass: 'YESYESYES'
+    }
+  });
+   
+  var inviteeName = "friend";
+   
+  var mailOptions = {
+    from: 'bootcampproject44@gmail.com',
+    to: email,
+    subject: 'You are invited!',
+    text: 'Dear '+inviteeName+',\n'+'you are invited to join http://localhost:3000/ \n\nCheers!\nTristan, Mark, Dmitrii'
+  };
+   
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+});
+
 };
