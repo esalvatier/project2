@@ -1,10 +1,12 @@
 var db = require("../models");
 var Op = db.Sequelize.Op;
-function traverseResponse(response) {
+function procResp(response) {
   var data = [];
   response.forEach(function(element) {
-    
-    data.push(element.dataValues.eventObj);
+    var event = JSON.parse(element.dataValues.eventObj);
+    event.id = element.dataValues.eventID;
+    event = JSON.stringify(event);
+    data.push(event);
   });
   return data;
 };
@@ -14,7 +16,7 @@ module.exports = function(app) {
     var date = req.query.date;
     var uid = req.query.uid;
       db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.lt]: date} }}}).then(function(dbResponse) {
-        res.json(traverseResponse(dbResponse));
+        res.json(procResp(dbResponse));
       });
   });
 
@@ -22,7 +24,7 @@ module.exports = function(app) {
     var date = req.query.date;
     var uid = req.query.uid;
       db.Event.findAll({ where: {[Op.and]: {eventOwner: uid, date: {[Op.gte]: date} }}}).then(function(dbResponse) {
-        res.json(traverseResponse(dbResponse));
+        res.json(procResp(dbResponse));
       });
   });
 
@@ -88,7 +90,16 @@ module.exports = function(app) {
 
 
   app.post("/api/event", function(req, res) {
-    db.Event.create(req.body).then(function(dbExample) {
+    var event = {
+      title: "Mark's Event",
+      start: "2018-12-17T12:00:00"
+    };
+    var test = {
+      date: "2018-12-17",
+      eventOwner: "qdcULZhNITN4rBQUe0lIWP9SvIt2",
+      eventObj: JSON.stringify(event)
+    };
+    db.Event.create(test).then(function(dbExample) {
       res.json(dbExample);
     });
   });

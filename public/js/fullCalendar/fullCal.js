@@ -266,7 +266,7 @@ $(document).ready(function() {
           $(".modal-body").append(
             "<p class=recommendEvents>URL: <a href=" +
               events.events[i].url +
-              ' target="_blank"' +
+              " target=\"_blank\"" +
               ">" +
               events.events[i].url +
               "</a></p>"
@@ -294,39 +294,40 @@ $(document).ready(function() {
               .find("form")[0]
               .reset();
           });
+          $(document).on("click", "#addEventBtn", function(event) {
+            event.preventDefault();
+            var title = $("#addEventTitle")
+              .val()
+              .trim();
 
-          //Title
-          $(".addEventTitle").attr("placeholder", "Enter Event Title Here!");
+            var strtTime = $("#addEventStartTime").val();
+            var endTime = $("#addEventEndTime").val();
 
-          //Start Day
-          $(".addEventDateDay").attr("placeholder", "Enter Start Day Here!");
-
-          //Start Month
-          $(".addEventDateMonth").attr(
-            "placeholder",
-            "Enter Start Month Here!"
-          );
-
-          //Start Year
-          $(".addEventDateYear").attr("placeholder", "Enter Start Year Here!");
-
-          //End Day
-          $(".addEventEndDateDay").attr("placeholder", "Enter End Day Here!");
-
-          //End Month
-          $(".addEventEndDateMonth").attr(
-            "placeholder",
-            "Enter End Month Here!"
-          );
-
-          //End Year
-          $(".addEventEndDateYear").attr("placeholder", "Enter End Year Here!");
-
-          //Start Time
-          $(".addEventStartTime").attr("placeholder", "Start Time Here!");
-
-          //End Time
-          $(".addEventEndTime").attr("placeholder", "End Time Here!");
+            var start = $("#addEventStart")
+              .val()
+              .trim();
+            var end = $("#addEventEnd")
+              .val()
+              .trim();
+            var allDay = $("#allDayCheck").val();
+            // var eventStart = moment(start + "T" + strtTime).format(
+            //  "YYYY-MM-DDTHH:mm:ss"
+            // );
+            // var eventEnd = moment(end + "T" + endTime).format(
+            //   "YYYY-MM-DDTHH:mm:ss"
+            // );
+            console.log(
+              "Start Date: " +
+                start +
+                " Time: " +
+                strtTime +
+                " | End Date: " +
+                end +
+                " Time: " +
+                " All Day: " +
+                allDay
+            );
+          });
         }
       }
     },
@@ -356,12 +357,10 @@ $(document).ready(function() {
         console.log(response);
         var source = [];
         response.forEach(function(elem) {
-          console.log(typeof elem);
-          console.log(elem);
           source.push(JSON.parse(elem));
         });
         $("#calendar").fullCalendar("removeEvents");
-        $("#calendar").fullCalendar("addEventSource", response);
+        $("#calendar").fullCalendar("addEventSource", source);
         $("#calendar").fullCalendar("rerenderEvents");
         $("#calendar").fullCalendar("refetchEvents");
         userLoggedIn(localUID);
