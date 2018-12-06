@@ -1,15 +1,5 @@
 $(document).ready(function() {
   $(".allDayCheck").hide();
-  $(".startTime").hide();
-  $(".startTimeText").hide();
-  $(".endTime").hide();
-  $(".endTimeText").hide();
-  $(".eventEndDateDay").hide();
-  $(".dateEndTextDay").hide();
-  $(".eventEndDateMonth").hide();
-  $(".dateEndTextMonth").hide();
-  $(".eventEndDateYear").hide();
-  $(".dateEndTextYear").hide();
 
   var val = $("#calendar").data("history");
   console.log(val);
@@ -124,19 +114,12 @@ $(document).ready(function() {
     },
     defaultDate: defaultStart,
     editable: false,
+
     //jsEvent and view also return data if passed through function
     eventClick: function(calEvent) {
       $(".allDayCheck").hide();
-      $(".startTime").hide();
-      $(".startTimeText").hide();
-      $(".endTime").hide();
-      $(".endTimeText").hide();
-      $(".eventEndDateDay").hide();
-      $(".dateEndTextDay").hide();
-      $(".eventEndDateMonth").hide();
-      $(".dateEndTextMonth").hide();
-      $(".eventEndDateYear").hide();
-      $(".dateEndTextYear").hide();
+      $(".editStartEventMaster").hide();
+      $(".editEndEventMaster").hide();
 
       //Triggers Modal
       $(this).attr("data-toggle", "modal");
@@ -148,69 +131,47 @@ $(document).ready(function() {
       );
 
       var n = momentStartTime.split("A");
-      var y = n[0];
 
+      var eventStartDate = n[0];
       var eventStartTime = n[1];
 
-      var eventDate = y.split("-");
+      var eventDate = eventStartDate.split("-");
       var eventYear = eventDate[0];
-      var eventMonth = eventDate[1];
-      var eventDay = eventDate[2];
 
       //End Time of click event
       var momentEndTime = moment(calEvent.end).format("YYYY-MM-DDTHH:mm:ss");
 
       var a = momentEndTime.split("A");
-      var b = a[0];
 
-      var eventEndTime = b[1];
+      var eventEndDate = a[0];
+      var eventEndTime = a[1];
 
-      var eventEndDate = b.split("-");
-      var eventEndYear = eventEndDate[0];
-      var eventEndMonth = eventEndDate[1];
-      var eventEndDay = eventEndDate[2];
+      var eventEnd = eventEndDate.split("-");
+      var eventEndYear = eventEnd[0];
 
       //Event Title
       $(".nameTitle").attr("value", calEvent.title);
+      $(".editStartEventMaster").show();
+      $("#editEventStart").attr("value", eventStartDate);
+      $("#editEventStartTime").attr("value", eventStartTime);
 
-      //Day
-      $(".eventDateDay").attr("value", eventDay);
-
-      //Month
-      $(".eventDateMonth").attr("value", eventMonth);
-
-      //Year
-      $(".eventDateYear").attr("value", eventYear);
-
+      //All Day Check
       if (calEvent.allDay) {
         $(".allDayCheck").show();
       } else {
         $(".allDayCheck").hide();
-        $(".startTime").show();
-        $(".startTimeText").show();
-        $(".startTime").attr("value", eventStartTime);
       }
 
       //End Time
       if (eventEndYear !== "Invalid date") {
-        $(".endTime").show();
-        $(".endTimeText").show();
-        $(".endTime").attr("placeholder", eventEndTime);
+        $(".editEndEventMaster").show();
 
-        //Day
-        $(".eventEndDateDay").show();
-        $(".dateEndTextDay").show();
-        $(".eventEndDateDay").attr("value", eventEndDay);
+        if (eventEndYear !== "Invalid date" && calEvent.allDay === true) {
+          $(".editEndEventMaster").hide();
+        }
 
-        //Month
-        $(".eventEndDateMonth").show();
-        $(".dateEndTextMonth").show();
-        $(".eventEndDateMonth").attr("value", eventEndMonth);
-
-        //Year
-        $(".eventEndDateYear").show();
-        $(".dateEndTextYear").show();
-        $(".eventEndDateYear").attr("value", eventEndYear);
+        $("#editEventEnd").attr("value", eventEndDate);
+        $("#editEventEndTime").attr("value", eventEndTime);
       }
 
       var eventStartTimeForEventbrite = moment(calEvent.start).format(
@@ -266,7 +227,7 @@ $(document).ready(function() {
           $(".modal-body").append(
             "<p class=recommendEvents>URL: <a href=" +
               events.events[i].url +
-              " target=\"_blank\"" +
+              ' target="_blank"' +
               ">" +
               events.events[i].url +
               "</a></p>"
@@ -366,7 +327,7 @@ $(document).on("click", "#addEventBtn", function(event) {
   var descrip = $("#eventDescription")
     .val()
     .trim();
-    
+
   var eventStart = start + "T";
   var eventEnd = "";
   if (strtTime === "") {

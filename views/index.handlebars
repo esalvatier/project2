@@ -11,7 +11,8 @@
       modal
     </button> --}}
 
-    <div class="modal fade bd-addEvent-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabelAdd" aria-hidden="true">
+    <div class="modal fade bd-addEvent-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabelAdd"
+      aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content addEventContent">
           <div class="modal-header addEventHeader">
@@ -30,16 +31,17 @@
           <div class="modal-body addEventBody">
             <form id="addEventForm">
               {{!-- Start Date --}}
-              <div class="form-group"> 
+              <div class="form-group">
                 <label for="addEventStart">Start Date</label>
                 <input type="date" class="form-control modalInput" id="addEventStart"></input>
                 <label for="addEventStartTime">Start Time</label>
                 <input type="time" class="addEventStartTime modalInput" id="addEventStartTime" step="300" required></input>
               </div>
+
+              {{!-- End Day --}}
               <div class="form-group">
-                {{!-- End Day --}}
                 <label for="addEventEnd">End Date</label>
-                <input type="date" class="form-control modalInput" id="addEventEnd"></input> 
+                <input type="date" class="form-control modalInput" id="addEventEnd"></input>
                 <label for="addEventEndTime">End Time</label>
                 <input type="time" class="addEventEndTime modalInput" id="addEventEndTime" step="300" ></input>
               </div>
@@ -47,10 +49,10 @@
                 <label for="allDayCheck">All Day Event</label>
                 <input type="checkbox" class="addEventDateDay modalInput" id="allDayCheck"></input>
               </div>
-            
+
               <div class="form-group">
                 <label for="eventDescription">Description:</label>
-                <input type="text" id="eventDescription">
+                <input type="text" class="modalInput" id="eventDescription">
               </div>
             </form>
 
@@ -69,13 +71,14 @@
 
     {{!-- Edit/View Existing Modal --}} {{!-- Calendar --}}
     <div id="calendar" data-history="false"></div>
-    <div class="modal fade bd-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
               <form class="titleForm">
-                <input class='nameTitle modalInput' type=text></input>
+                <input class="nameTitle modalInput" type="text"></input>
               </form>
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -88,35 +91,20 @@
               {{!-- All Day Notice --}}
               <p class="allDayCheck">This is an all day event</p>
 
-              {{!-- Start Day --}}
-              <input class='eventDateDay modalInput'></input>
-              <p class='dateTextDay modalText'>Start Day</p>
-              {{!-- Start Month --}}
-              <input class='eventDateMonth modalInput'></input>
-              <p class='dateTextMonth modalText'>Start Month</p>
-              {{!-- Start Year --}}
-              <input class='eventDateYear modalInput'></input>
-              <p class='dateTextYear modalText'>Start Year</p>
+              <div class="form-group editStartEventMaster">
+                <label for="editEventStartDate">Start Date</label>
+                <input type="date" class="editEventStartDate form-control modalInput" id="editEventStart"></input>
+                <label for="editEventStartTime">Start Time</label>
+                <input type="time" class="editEventStartTime modalInput" id="editEventStartTime" required></input>
+              </div>
 
-              {{!-- End Day --}}
-              <input class='eventEndDateDay modalInput'></input>
-              <p class='dateEndTextDay modalText'>End Day</p>
-              {{!-- End Month --}}
-              <input class='eventEndDateMonth modalInput'></input>
-              <p class='dateEndTextMonth modalText'>End Month</p>
-              {{!-- End Year --}}
-              <input class='eventEndDateYear modalInput'></input>
-              <p class='dateEndTextYear modalText'>End Year</p>
+              <div class="form-group editEndEventMaster">
+                <label for="editEventEnd">End Date</label>
+                <input type="date" class="form-control modalInput" id="editEventEnd"></input>
+                <label for="editEventEndTime">End Time</label>
+                <input type="time" class="editEventEndTime modalInput" id="editEventEndTime"></input>
+              </div>
 
-              {{!-- Times --}}
-              <form class="editingForm">
-                {{!-- Start Time --}}
-                <input class='startTime modalInput'></input>
-                <p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>
-                {{!-- End Time --}}
-                <input class='endTime modalInput'></input>
-                <p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>
-              </form>
             </form>
 
             <p class="recommendEvents">Recommendations for Events that start at the same time</p>
