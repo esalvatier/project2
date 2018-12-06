@@ -93,12 +93,18 @@ module.exports = function(app) {
 
 
   app.post("/api/event", function(req, res) {
+    console.log("req.body.eventStart: " + req.body.eventStart);
+    console.log("req.body.eventEnd: " + req.body.eventEnd);
+
     var event = {
-      title: "Mark's Event",
-      start: "2018-12-17T12:00:00"
+      title: req.body.title,
+      start: req.body.eventStart,
+      end: req.body.eventEnd,
+      description: req.body.description,
+      fullDay: req.body.fullDay,     
     };
     var test = {
-      date: "2018-12-17",
+      date: req.body.startDate,
       eventOwner: "qdcULZhNITN4rBQUe0lIWP9SvIt2",
       eventObj: JSON.stringify(event)
     };

@@ -303,30 +303,48 @@ $(document).ready(function() {
             var strtTime = $("#addEventStartTime").val();
             var endTime = $("#addEventEndTime").val();
 
-            var start = $("#addEventStart")
+            var startDate = $("#addEventStartDate")
               .val()
               .trim();
-            var end = $("#addEventEnd")
+            var endDate = $("#addEventEndDate")
               .val()
               .trim();
+            
             var allDay = $("#allDayCheck").val();
-            // var eventStart = moment(start + "T" + strtTime).format(
-            //  "YYYY-MM-DDTHH:mm:ss"
-            // );
-            // var eventEnd = moment(end + "T" + endTime).format(
-            //   "YYYY-MM-DDTHH:mm:ss"
-            // );
+
+            var description = $("#eventDescription").val();
+
+            var eventStart = moment(startDate + "T" + strtTime).format("YYYY-MM-DDTHH:mm:ss");
+            var eventEnd = moment(endDate + "T" + endTime).format("YYYY-MM-DDTHH:mm:ss");
+
             console.log(
               "Start Date: " +
-                start +
+                startDate +
                 " Time: " +
                 strtTime +
                 " | End Date: " +
-                end +
+                endDate +
                 " Time: " +
                 " All Day: " +
                 allDay
             );
+
+            console.log("BEFORE AJAX CALL");
+
+            $.ajax("/api/event/", {
+              method: "POST",
+              data: {
+                title: title,
+                eventStart: eventStart,
+                eventEnd: eventEnd,
+                allDay: allDay,
+                description: description,
+                startDate: startDate
+              }
+            }).then(function(response) {
+              //TODO
+            });
+
           });
         }
       }
