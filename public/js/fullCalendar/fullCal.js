@@ -229,13 +229,13 @@ $(document).ready(function() {
 
       //format the URL
       // var url =
-      ("https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&start_date.range_start=");
-      url += eventStartTimeForEventbrite3;
-      url += "&start_date.range_end=";
-      url += eventEndTimeForEventbrite3;
-      url +=
-        "&categories=103,113,105,104,108,107,102,109,110,111,114,115,116,106,117,118,119&token=E3HXKGT4QLZPWYHIGQD2";
-      console.log("URL: " + url);
+      // ("https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&start_date.range_start=");
+      // url += eventStartTimeForEventbrite3;
+      // url += "&start_date.range_end=";
+      // url += eventEndTimeForEventbrite3;
+      // url +=
+      //   "&categories=103,113,105,104,108,107,102,109,110,111,114,115,116,106,117,118,119&token=E3HXKGT4QLZPWYHIGQD2";
+      // console.log("URL: " + url);
 
       //call into eventbrite API
       var API = {
@@ -287,46 +287,14 @@ $(document).ready(function() {
         click: function() {
           $(this).attr("data-toggle", "modal");
           $(this).attr("data-target", ".bd-addEvent-modal-lg");
+          $(this).attr("id", "addEventModal");
+          console.log(this);
 
           //Reset's typed text in modal
           $(".modal").on("hidden.bs.modal", function() {
             $(this)
               .find("form")[0]
               .reset();
-          });
-          $(document).on("click", "#addEventBtn", function(event) {
-            event.preventDefault();
-            var title = $("#addEventTitle")
-              .val()
-              .trim();
-
-            var strtTime = $("#addEventStartTime").val();
-            var endTime = $("#addEventEndTime").val();
-
-            var start = $("#addEventStart")
-              .val()
-              .trim();
-            var end = $("#addEventEnd")
-              .val()
-              .trim();
-            var allDay = $("#allDayCheck").val();
-            // var eventStart = moment(start + "T" + strtTime).format(
-            //  "YYYY-MM-DDTHH:mm:ss"
-            // );
-            // var eventEnd = moment(end + "T" + endTime).format(
-            //   "YYYY-MM-DDTHH:mm:ss"
-            // );
-            console.log(
-              "Start Date: " +
-                start +
-                " Time: " +
-                strtTime +
-                " | End Date: " +
-                end +
-                " Time: " +
-                " All Day: " +
-                allDay
-            );
           });
         }
       }
@@ -358,6 +326,7 @@ $(document).ready(function() {
         response.forEach(function(elem) {
           source.push(JSON.parse(elem));
         });
+        console.log(source);
         $("#calendar").fullCalendar("removeEvents");
         $("#calendar").fullCalendar("addEventSource", source);
         $("#calendar").fullCalendar("rerenderEvents");
@@ -375,4 +344,74 @@ $(document).ready(function() {
     $("#calendar").fullCalendar("rerenderEvents");
     $("#calendar").fullCalendar("refetchEvents");
   });
+});
+
+$(document).on("click", "#addEventBtn", function(event) {
+  event.preventDefault();
+  var title = $("#addEventTitle")
+    .val()
+    .trim();
+
+  var strtTime = $("#addEventStartTime").val();
+  var endTime = $("#addEventEndTime").val();
+
+  var start = $("#addEventStart")
+    .val()
+    .trim();
+  var end = $("#addEventEnd")
+    .val()
+    .trim();
+  console.log("end: " + end);
+  var allDay = $("#allDayCheck").is(":checked");
+  var descrip = $("#eventDescription")
+    .val()
+    .trim();
+    
+  var eventStart = start + "T";
+  var eventEnd = "";
+  if (strtTime === "") {
+    eventStart += "00:00";
+  } else {
+    eventStart += strtTime;
+  }
+  var eventObj = {
+    title: title,
+    start: eventStart,
+    description: descrip
+  };
+  if (end === "") {
+    eventEnd += start + "T";
+  } else {
+    eventEnd += end + "T";
+  }
+  if (endTime === "") {
+    eventEnd += "00:00";
+  } else {
+    eventEnd += endTime;
+  }
+  if (eventEnd !== " T ") {
+    eventObj.end = eventEnd;
+  }
+  console.log(
+    "Start Date: " +
+      start +
+      " Time: " +
+      strtTime +
+      " | End Date: " +
+      end +
+      " Time: " +
+      " All Day: " +
+      allDay
+  );
+  eventObj.allDay = allDay;
+  console.log("event Add");
+  $.ajax("/api/event/", {
+    method: "POST",
+    data: {
+      eventOwner: localUID,
+      date: start,
+      eventObj: JSON.stringify(eventObj)
+    }
+  });
+  $(".bd-addEvent-modal-lg").modal("hide");
 });
