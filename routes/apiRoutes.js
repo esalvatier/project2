@@ -162,4 +162,18 @@ app.post("/api/email", function(req, res) {
 
 });
 
+
+app.get("/api/search", function(req, res) {
+  console.log(req.query);
+  db.User.findAll({where: {[Op.or]: 
+    [
+      { firstName: req.query.searchterm }, {lastName: req.query.searchterm}, {email: req.query.searchterm} 
+    ], 
+    }}).then(function(dbExample) {
+    console.log(dbExample);
+    res.json(dbExample);
+  });
+});
+
 };
+
