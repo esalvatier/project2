@@ -1,5 +1,3 @@
-
-
 $(document).on("click", "#search-button", function(event) {
   event.preventDefault();
 
@@ -14,19 +12,43 @@ $(document).on("click", "#search-button", function(event) {
   //   .val()
   //   .trim();
 
-    $.ajax("/api/search/", {
-      method: "GET",
-      data: {
-        searchterm: searchterm
-      }
-    }).then(function(response) {
-      console.log(response[0].firstName);
-      $("#friends-found").empty();
-      for (var i=0; i < response.length; i++) {
-       $("#friends-found").append(response[i].firstName + " " + response[i].lastName + " " + response[i].email);
-       $("#friends-found").append("<br>");
-      }
-    });
-    
+  $.ajax("/api/search/", {
+    method: "GET",
+    data: {
+      searchterm: searchterm
+    }
+  }).then(function(response) {
+    $("#friends-found").empty();
+    for (var i = 0; i < response.length; i++) {
+      var result = $("<li>").text(
+        "Name: " +
+          response[i].firstName +
+          " " +
+          response[i].lastName +
+          " Email: " +
+          response[i].email
+      );
+      var newBtn = $("<button>")
+        .attr({
+          class: "frndRequestBtn btn btn-secondary",
+          uid: response[i].uid,
+          display: "inline-block"
+        })
+        .text("Send Friend Request");
+      result.append(newBtn);
+      $("#friends-found").append(result);
+    }
   });
+});
 
+$(document).on("click", ".frndRequestBtn", function() {
+  var targetUser = $(this).attr("uid");
+  var fromUser = sessionStorage.getItem("localUID");
+  $.ajax("/api/friend", {
+    method: "POST",
+    data: { fromUser: fromUser, targetUser: targetUser, status: 1 }
+  });
+  $(this)
+    .parent()
+    .remove();
+});

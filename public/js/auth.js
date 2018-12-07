@@ -13,7 +13,6 @@ function userLoggedIn(dbUID) {
     method: "GET",
     data: { uid: dbUID }
   }).done(function(response) {
-    console.log(response);
     $("#username-display").text(response.firstName + " " + response.lastName);
     $("#user-dropdown").show();
     $("#user-display").show();
@@ -26,7 +25,7 @@ function userLoggedIn(dbUID) {
 }
 
 function userLoggedOut() {
-  localUID = "";
+  sessionStorage.setItem("localUID", "");
   firebase
     .auth()
     .signOut()
@@ -44,12 +43,11 @@ function userLoggedOut() {
     });
 }
 // eslint-disable-next-line no-unused-vars
-var localUID = "";
 //var database = firebase.database();
 
 $(document).on("click", "#sign-in-btn", function(event) {
   event.preventDefault();
-
+  var localUID = sessionStorage.getItem("dropselvalue");
   // Grabs user input
   var email = $("#username-input")
     .val()
@@ -129,7 +127,6 @@ $(document).on("click", "#register-btn", function(event) {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(function(data) {
-        console.log("signed up");
         var newUser = {
           firstName: firstName,
           lastName: lastName,
@@ -153,14 +150,12 @@ $(document).on("click", "#register-btn", function(event) {
   }
 });
 
-
-firebase.auth().onAuthStateChanged(function(user){
-  console.log("user: " + user);
+firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    localUID = user.uid;
-    console.log("localUID: " + localUID);
+    var localUID = user.uid;
+    if (window.sessionStorage) {
+      sessionStorage.setItem("localUID", localUID);
+    }
     userLoggedIn(localUID);
   }
 });
-
-

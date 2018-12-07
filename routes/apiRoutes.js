@@ -73,7 +73,6 @@ module.exports = function(app) {
   });
 
   app.get("/api/user", function(req, res) {
-    console.log(req.query);
     db.User.findOne({where: {uid: req.query.uid}}).then(function(dbExample) {
       res.json(dbExample);
     });
@@ -91,7 +90,7 @@ module.exports = function(app) {
     var targetUser = req.body.targetUser;
     var status = req.body.status;
     db.userRelationship
-      .create({ fromUser: fromUser, targetUser: targetUser, meaning: status })
+      .create({ fromUser: fromUser, targetUser: targetUser, code: status })
       .then(function(dbExample) {
         res.json(dbExample);
       });
@@ -101,10 +100,10 @@ module.exports = function(app) {
     var relID = req.body.id;
     var newStatus = req.body.status;
     db.userRelationship
-      .update({ meaning: newStatus }, { where: { relID: relID } })
+      .update({ code: newStatus }, { where: { relID: relID } })
       .then(function(dbExample) {
         res.json(dbExample);
-      });
+    });
   });
 
   // Delete an example by id
@@ -149,13 +148,11 @@ app.post("/api/email", function(req, res) {
 
 
 app.get("/api/search", function(req, res) {
-  console.log(req.query);
   db.User.findAll({where: {[Op.or]: 
     [
       { firstName: req.query.searchterm }, {lastName: req.query.searchterm}, {email: req.query.searchterm} 
     ], 
     }}).then(function(dbExample) {
-    console.log(dbExample);
     res.json(dbExample);
   });
 });

@@ -2,7 +2,6 @@ $(document).ready(function() {
   $(".allDayCheck").hide();
 
   var val = $("#calendar").data("history");
-  console.log(val);
   var defaultStart = moment().format("YYYY-MM-DD");
   var resources = [
     {
@@ -275,7 +274,6 @@ $(document).ready(function() {
       var nowDate = moment()
         .startOf("month")
         .format("YYYY-MM-DD");
-      console.log(val);
       $.ajax("/api/event/" + val, {
         method: "GET",
         data: {
@@ -287,7 +285,6 @@ $(document).ready(function() {
         response.forEach(function(elem) {
           source.push(JSON.parse(elem));
         });
-        console.log(source);
         $("#calendar").fullCalendar("removeEvents");
         $("#calendar").fullCalendar("addEventSource", source);
         $("#calendar").fullCalendar("rerenderEvents");

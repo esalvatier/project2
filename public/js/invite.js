@@ -1,5 +1,3 @@
-
-
 $(document).on("click", "#send-email-button", function(event) {
   event.preventDefault();
 
@@ -14,14 +12,10 @@ $(document).on("click", "#send-email-button", function(event) {
   //   .val()
   //   .trim();
 
-    $.ajax("/api/email/", {
-      method: "POST",
-      data: {
-        email: email
-      }
-    }).then(function(response) {
-      //TODO
-    });
-    
+  $.ajax("/api/email/", {
+    method: "POST",
+    data: {
+      email: email
+    }
   });
-
+});
