@@ -14,12 +14,8 @@
     "dialect": "mysql",
     "logging": false
   },
-  "production": {
-    "username": "root",
-    "password": "YES",
-    "database": "eventorganizerdb",
-    "host": "localhost",
-    "dialect": "mysql",
-    "logging": false
+  "production":{
+    "use_env_variable": "JAWSDB_URL",
+    "dialect": "mysql"
   }
 }
