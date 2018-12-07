@@ -1,5 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  {{> nav/navbar}}
+  <a class="navbar-brand" href="/">Project 2 Event</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 </nav>
 
 <div class="row contentRow no-gutters">
@@ -7,33 +11,32 @@
     <div id="circle1"></div>
   </div>
   <div class="col-lg-6 centerContent">
-    <script src="/js/fullCalendar/fullCal.js"></script>
-    <div id="calendar" data-history="true"></div>
+    <div id="sign-up-form" style="margin-top: 20px;">
+      {{> forms/sign-up-form}}
+    </div>
 
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-      aria-hidden="true">
+    <div id="sign-fail-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <h5 class="modal-title" id="modalLabel"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-
+            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="col-lg-3 sideBars">
+  
+    <div class="col-lg-3 sideBars">
     <div id="circle2"></div>
   </div>
-</div>
+ </div>
 </div>

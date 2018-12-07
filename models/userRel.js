@@ -22,7 +22,6 @@ module.exports = function(sequelize, DataTypes) {
       updatedAt: "responseTime"
     }
   );
-
   userRelationship.associate = function(models) {
     userRelationship.belongsTo(models.Status, {
       foreignKey: "code",

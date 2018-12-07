@@ -1,0 +1,87 @@
+<script src="/js/friends.js"></script>
+<script src="/js/invite.js"></script>
+<script src="/js/search.js"></script>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  {{> nav/navbar}}
+</nav>
+
+<div class="row contentRow no-gutters">
+  <div class="col-lg-3 sideBars">
+    <div id="circle1"></div>
+  </div>
+  <div class="col-lg-6 centerContent">
+    <div id="friends-display">
+      <div class="requests">
+        <h1>Requests</h1>
+        <ul id="requests"></ul>
+      </div>
+      <div class="friends">
+        <h1>Friends</h1>
+        <ul id="friends"></ul>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="invite-friends border">
+      <form>
+        <h3>Invite a friend to the App!</h3>
+        <p>Enter their email bellow to send a link to the app.</p>
+        <label for="email-input">Email</label>
+
+        <input id="email-input" placeholder="Enter email..."></input>
+
+        <br>
+        <button id="send-email-button">Submit</button>
+      </form>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="search-friends border">
+      <form>
+        <label for="search-input">Search</label>
+        <input id="search-input" placeholder="Enter first or last name, or email"></input>
+        <br>
+        <button id="search-button">Search</button>
+      </form>
+      <div>
+        <ul id="friends-found">
+
+        </ul>
+      </div>
+    </div>
+
+    {{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large
+      modal</button>
+    --}}
+
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 sideBars">
+    <div id="circle2"></div>
+  </div>
+</div>
+</div>

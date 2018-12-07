@@ -1,6 +1,7 @@
 $(document).ready(function() {
+  $(".allDayCheck").hide();
+
   var val = $("#calendar").data("history");
-  console.log(val);
   var defaultStart = moment().format("YYYY-MM-DD");
   var resources = [
     {
@@ -109,63 +110,70 @@ $(document).ready(function() {
     eventClick: function(event) {
       console.log("test");
       event.title = "CLICKED!";
-      // $('#calendar').fullCalendar('updateEvent', event);
     },
     defaultDate: defaultStart,
     editable: false,
+
     //jsEvent and view also return data if passed through function
     eventClick: function(calEvent) {
-      //Clears contents so each time clicked only selected content appears
-      $(".modal-title").text("");
-      $(".modal-body").text("");
-      console.log(calEvent.source);
+      $(".allDayCheck").hide();
+      $(".editStartEventMaster").hide();
+      $(".editEndEventMaster").hide();
 
-      //Gives the clicked event the needed class'/data for it to trigger the modal.  Won't work without these two lines
+      //Triggers Modal
       $(this).attr("data-toggle", "modal");
-      $(this).attr("data-target", ".bd-example-modal-lg");
+      $(this).attr("data-target", ".bd-edit-modal-lg");
 
-      //Time needs to be converted by Moment JS
-      var eventStartTime = moment(calEvent.start).format("h:mm a");
-      var eventEndTime = moment(calEvent.end).format("h:mm a");
-
-      //Title
-      $(".modal-title").append("<form class=titleForm></form>");
-      $(".titleForm").append(
-        "<input class='nameTitle modalInput' type=text></input>"
+      //Start Time of click event
+      var momentStartTime = moment(calEvent.start).format(
+        "YYYY-MM-DDTHH:mm:ss"
       );
+
+      var n = momentStartTime.split("A");
+
+      var eventStartDate = n[0];
+      var eventStartTime = n[1];
+
+      var eventDate = eventStartDate.split("-");
+      // eslint-disable-next-line no-unused-vars
+      var eventYear = eventDate[0];
+
+      //End Time of click event
+      var momentEndTime = moment(calEvent.end).format("YYYY-MM-DDTHH:mm:ss");
+
+      var a = momentEndTime.split("A");
+
+      var eventEndDate = a[0];
+      var eventEndTime = a[1];
+
+      var eventEnd = eventEndDate.split("-");
+      var eventEndYear = eventEnd[0];
+
+      //Event Title
       $(".nameTitle").attr("value", calEvent.title);
+      $(".editStartEventMaster").show();
+      $("#editEventStart").attr("value", eventStartDate);
+      $("#editEventStartTime").attr("value", eventStartTime);
 
+      //All Day Check
       if (calEvent.allDay) {
-        $(".modal-body").append("<p class=allDayCheck></p>");
-        $(".allDayCheck").append("This is an all day event");
+        $(".allDayCheck").show();
       } else {
-        $(".modal-body").append("<form class=editingForm></form>");
-
-        //Start Time (All events require at least a start time to be valid)
-        $(".editingForm").append(
-          "<input class='startTime modalInput'></input>"
-        );
-        $(".editingForm").append(
-          "<p class='startTimeText modalText'>Start Time (Format must be (HH:mm) </p>"
-        );
-        $(".startTime").attr("value", eventStartTime);
+        $(".allDayCheck").hide();
       }
 
       //End Time
-      if (eventEndTime !== "Invalid date") {
-        $(".editingForm").append("<input class='endTime modalInput'></input>");
-        $(".editingForm").append(
-          "<p class='endTimeText modalText'>End Time (Format must be (HH:mm)</p>"
-        );
-        $(".endTime").attr("placeholder", eventEndTime);
+      if (eventEndYear !== "Invalid date") {
+        $(".editEndEventMaster").show();
+
+        if (eventEndYear !== "Invalid date" && calEvent.allDay === true) {
+          $(".editEndEventMaster").hide();
+        }
+
+        $("#editEventEnd").attr("value", eventEndDate);
+        $("#editEventEndTime").attr("value", eventEndTime);
       }
-
-      $(".modal-body").append(
-        "<p class=recommendEvents>Recommendations for Events that start at the same time</p>"
-      );
-
-      // $(".editingForm").append("<input class=eventMonth></input>");
-      // $(".allDayCheck").append("Month: " + calEvent.allDay);
+      $("#descriptionP").text(calEvent.description);
     },
     eventMouseover: function() {
       $(this).css("border-color", "#00427f");
@@ -177,7 +185,17 @@ $(document).ready(function() {
       addNewEvent: {
         text: "Add Event!",
         click: function() {
-          alert("You added an event!");
+          $(this).attr("data-toggle", "modal");
+          $(this).attr("data-target", ".bd-addEvent-modal-lg");
+          $(this).attr("id", "addEventModal");
+          console.log(this);
+
+          //Reset's typed text in modal
+          $(".modal").on("hidden.bs.modal", function() {
+            $(this)
+              .find("form")[0]
+              .reset();
+          });
         }
       }
     },
@@ -196,15 +214,19 @@ $(document).ready(function() {
       var nowDate = moment()
         .startOf("month")
         .format("YYYY-MM-DD");
-      $.ajax("/api/event/" + history, {
+      $.ajax("/api/event/" + val, {
         method: "GET",
         data: {
           date: nowDate,
           uid: localUID
         }
-      }).done(function(response) {
+      }).then(function(response) {
+        var source = [];
+        response.forEach(function(elem) {
+          source.push(JSON.parse(elem));
+        });
         $("#calendar").fullCalendar("removeEvents");
-        $("#calendar").fullCalendar("addEventSource", response);
+        $("#calendar").fullCalendar("addEventSource", source);
         $("#calendar").fullCalendar("rerenderEvents");
         $("#calendar").fullCalendar("refetchEvents");
         userLoggedIn(localUID);
@@ -219,5 +241,134 @@ $(document).ready(function() {
     $("#calendar").fullCalendar("addEventSource", resources);
     $("#calendar").fullCalendar("rerenderEvents");
     $("#calendar").fullCalendar("refetchEvents");
+  });
+});
+
+$(document).on("click", "#addEventBtn", function(event) {
+  event.preventDefault();
+  var title = $("#addEventTitle")
+    .val()
+    .trim();
+
+  var strtTime = $("#addEventStartTime").val();
+  var endTime = $("#addEventEndTime").val();
+
+  var start = $("#addEventStart")
+    .val()
+    .trim();
+  var end = $("#addEventEnd")
+    .val()
+    .trim();
+  console.log("end: " + end);
+  var allDay = $("#allDayCheck").is(":checked");
+  var descrip = $("#eventDescription")
+    .val()
+    .trim();
+
+  var eventStart = start + "T";
+  var eventEnd = "";
+  if (strtTime === "") {
+    eventStart += "00:00";
+  } else {
+    eventStart += strtTime;
+  }
+  var eventObj = {
+    title: title,
+    start: eventStart,
+    description: descrip
+  };
+  if (end === "") {
+    eventEnd += start + "T";
+  } else {
+    eventEnd += end + "T";
+  }
+  if (endTime === "") {
+    eventEnd += "00:00";
+  } else {
+    eventEnd += endTime;
+  }
+  if (eventEnd !== " T ") {
+    eventObj.end = eventEnd;
+  }
+  console.log(
+    "Start Date: " +
+      start +
+      " Time: " +
+      strtTime +
+      " | End Date: " +
+      end +
+      " Time: " +
+      " All Day: " +
+      allDay
+  );
+  eventObj.allDay = allDay;
+  $.ajax("/api/event/", {
+    method: "POST",
+    data: {
+      eventOwner: localUID,
+      date: start,
+      eventObj: JSON.stringify(eventObj)
+    }
+  });
+  $(".bd-addEvent-modal-lg").modal("hide");
+});
+
+$(document).on("click", "#getRecommends", function(event) {
+  event.preventDefault();
+  var ebEventStart = $("#addEventStart")
+    .val()
+    .trim();
+  if (ebEventStart === "") {
+    $("#addEventStart").css("color", "red");
+  }
+  var ebEventStartTime = $("#addEventStartTime").val();
+  if (ebEventStartTime === "") {
+    $("#addEventStartTime").css("color", "red");
+  }
+  var eventStartRange = ebEventStart + "T" + ebEventStartTime;
+  eventStartRange = moment(eventStartRange).format("YYYY-MM-DDTHH:mm:ss");
+  var eventEndRange = moment(eventStartRange)
+    .add(1, "hour")
+    .format("YYYY-MM-DDTHH:mm:ss");
+  console.log(eventEndRange);
+  //format the URL
+  eventStartRange += "Z";
+  eventEndRange += "Z";
+  var url =
+    "https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&start_date.range_start=";
+  url += eventStartRange;
+  url += "&start_date.range_end=";
+  url += eventEndRange;
+  url +=
+    "&categories=103,113,105,104,108,107,102,109,110,111,114,115,116,106,117,118,119&token=E3HXKGT4QLZPWYHIGQD2";
+  console.log(url);
+  var API = {
+    getEvents: function() {
+      return $.ajax({
+        url: url,
+        type: "GET"
+      });
+    }
+  };
+
+  API.getEvents().then(function(events) {
+    var count = events.pagination.object_count;
+    $("#addEventStart").css("color", "black");
+    $("#addEventStartTime").css("color", "black");
+    for (var i = 0; i < count; i++) {
+      $("#eventRecommendations").append(
+        "<p class=recommendEvents>Name:" + events.events[i].name.text + "</p>"
+      );
+      $("#eventRecommendations").append(
+        "<p class=recommendEvents>URL: <a href=" +
+          events.events[i].url +
+          // eslint-disable-next-line prettier/prettier
+          " target=\"_blank\"" +
+          ">" +
+          events.events[i].url +
+          "</a></p>"
+      );
+      $("#eventRecommendations").append("<br>");
+    }
   });
 });

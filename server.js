@@ -10,7 +10,7 @@ var PORT = process.env.PORT || 3000;
 // Middleware
 app.use(
   express.urlencoded({
-    extended: false
+    extended: true
   })
 );
 app.use(express.json());
