@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  {{> nav/navbar}}  
-</nav> 
+  <a class="navbar-brand" href="/">Project 2 Event</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
 
 <div class="row contentRow no-gutters">
   <div class="col-lg-3 sideBars">
@@ -12,7 +16,9 @@
         <h1>Requests</h1>
         <ul id="requests"></ul>
       </div>
-      <div class="friends" id="friends"><h1>Friends</h1></div>
+      <div class="friends" id="friends">
+        <h1>Friends</h1>
+      </div>
     </div>
 
     <br>
@@ -21,14 +27,14 @@
     <br>
 
     <div class="invite-friends">
-                <form>
-                    <h3>Email</h3>
-                    <input id="email-input" value="dmitrii_zakharov@hotmail.com"></input>
-                    {{!-- <h3>Message</h3>
-                    <input id="message-input"></input> --}}
-                    <br>
-                    <button id="send-email-button">Submit</button>
-                </form>
+      <form>
+        <h3>Email</h3>
+        <input id="email-input" value="dmitrii_zakharov@hotmail.com"></input>
+        {{!-- <h3>Message</h3>
+        <input id="message-input"></input> --}}
+        <br>
+        <button id="send-email-button">Submit</button>
+      </form>
     </div>
 
     <br>
@@ -37,21 +43,23 @@
     <br>
 
     <div class="search-friends">
-                <form>
-                    <h3>Search</h3>
-                    <input id="search-input" value="Dmitrii"></input>
-                    {{!-- <h3>Message</h3>
-                    <input id="message-input"></input> --}}
-                    <br>
-                    <button id="search-button">Search</button>
-                </form>
-                <div id="friends-found"></div>
+      <form>
+        <h3>Search</h3>
+        <input id="search-input" value="Dmitrii"></input>
+        {{!-- <h3>Message</h3>
+        <input id="message-input"></input> --}}
+        <br>
+        <button id="search-button">Search</button>
+      </form>
+      <div id="friends-found"></div>
     </div>
 
-    {{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+    {{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large
+      modal</button>
     --}}
 
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -61,7 +69,7 @@
             </button>
           </div>
           <div class="modal-body">
-            
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -71,8 +79,8 @@
       </div>
     </div>
   </div>
-  
-    <div class="col-lg-3 sideBars">
+
+  <div class="col-lg-3 sideBars">
     <div id="circle2"></div>
   </div>
 </div>

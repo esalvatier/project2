@@ -24,12 +24,29 @@ var refreshFriends = function() {
         data: { uid: request.fromUser }
       }).done(function(response) {
         console.log(response);
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": request.id
-        }).text(response.fullName)
+        var $li = $("<li>")
+          .attr({
+            class: "list-group-item",
+            "data-id": request.id
+          })
+          .text(response.fullName);
         $("#requests").append($li);
+        //Accept
+        var $acceptBtn = $("<button>")
+          .attr({
+            class: "acceptButton btn-success",
+            display: inline
+          })
+          .text("Accept");
+        $($li).append($acceptBtn);
+        //Decline
+        var $declineBtn = $("<button>")
+          .attr({
+            class: "declineButton btn-danger",
+            display: inline
+          })
+          .text("Decline");
+        $($li).append($declineBtn);
       });
     });
     data.friends.forEach(function(friends) {
@@ -38,11 +55,12 @@ var refreshFriends = function() {
         data: { uid: friends.targetUser }
       }).done(function(response) {
         console.log(response);
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": friends.id
-        }).text(response.fullName)
+        var $li = $("<li>")
+          .attr({
+            class: "list-group-item",
+            "data-id": friends.id
+          })
+          .text(response.fullName);
         $("#friends").append($li);
       });
     });
