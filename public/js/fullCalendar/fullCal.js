@@ -135,6 +135,7 @@ $(document).ready(function() {
       var eventStartTime = n[1];
 
       var eventDate = eventStartDate.split("-");
+      // eslint-disable-next-line no-unused-vars
       var eventYear = eventDate[0];
 
       //End Time of click event
@@ -361,6 +362,7 @@ $(document).on("click", "#getRecommends", function(event) {
       $("#eventRecommendations").append(
         "<p class=recommendEvents>URL: <a href=" +
           events.events[i].url +
+          // eslint-disable-next-line prettier/prettier
           " target=\"_blank\"" +
           ">" +
           events.events[i].url +
