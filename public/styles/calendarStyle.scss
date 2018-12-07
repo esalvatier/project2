@@ -94,3 +94,8 @@ body {
 .modalText {
   color: $color-black;
 }
+
+#editEventStartTime,
+#editEventEndTime {
+  margin-top: 10px;
+}

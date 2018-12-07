@@ -81,22 +81,7 @@ module.exports = function(app) {
 
 
   app.post("/api/event", function(req, res) {
-    console.log("req.body.eventStart: " + req.body.eventStart);
-    console.log("req.body.eventEnd: " + req.body.eventEnd);
-
-    var event = {
-      title: req.body.title,
-      start: req.body.eventStart,
-      end: req.body.eventEnd,
-      description: req.body.description,
-      fullDay: req.body.fullDay,     
-    };
-    var test = {
-      date: req.body.startDate,
-      eventOwner: "qdcULZhNITN4rBQUe0lIWP9SvIt2",
-      eventObj: JSON.stringify(event)
-    };
-    db.Event.create(test).then(function(dbExample) {
+    db.Event.create(req.body).then(function(dbExample) {
       res.json(dbExample);
     });
   });
