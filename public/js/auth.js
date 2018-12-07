@@ -24,6 +24,7 @@ function userLoggedIn(dbUID) {
   });
 }
 
+// eslint-disable-next-line no-unused-vars
 function userLoggedOut() {
   sessionStorage.setItem("localUID", "");
   firebase
