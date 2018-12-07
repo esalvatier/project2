@@ -199,42 +199,42 @@ $(document).ready(function() {
       // console.log("URL: " + url);
 
       //call into eventbrite API
-      var API = {
-        getEvents: function() {
-          return $.ajax({
-            url: url,
-            type: "GET"
-          });
-        }
-      };
+      // var API = {
+      //   getEvents: function() {
+      //     return $.ajax({
+      //       url: url,
+      //       type: "GET"
+      //     });
+      //   }
+      // };
 
-      API.getEvents().then(function(events) {
-        console.log(events);
-        //var events = JSON.parse(data);
-        console.log("Parsed JSON: " + events);
-        var count = events.pagination.object_count;
-        console.log("count: " + count);
+      // API.getEvents().then(function(events) {
+      //   console.log(events);
+      //   //var events = JSON.parse(data);
+      //   console.log("Parsed JSON: " + events);
+      //   var count = events.pagination.object_count;
+      //   console.log("count: " + count);
 
-        for (var i = 0; i < count; i++) {
-          console.log("Name: " + events.events[i].name.text);
-          $(".modal-body").append(
-            "<p class=recommendEvents>Name:" +
-              events.events[i].name.text +
-              "</p>"
-          );
-          console.log("Url: " + events.events[i].url);
-          console.log("\n");
-          $(".modal-body").append(
-            "<p class=recommendEvents>URL: <a href=" +
-              events.events[i].url +
-              ' target="_blank"' +
-              ">" +
-              events.events[i].url +
-              "</a></p>"
-          );
-          $(".modal-body").append("<br>");
-        }
-      });
+      //   for (var i = 0; i < count; i++) {
+      //     console.log("Name: " + events.events[i].name.text);
+      //     $(".modal-body").append(
+      //       "<p class=recommendEvents>Name:" +
+      //         events.events[i].name.text +
+      //         "</p>"
+      //     );
+      //     console.log("Url: " + events.events[i].url);
+      //     console.log("\n");
+      //     $(".modal-body").append(
+      //       "<p class=recommendEvents>URL: <a href=" +
+      //         events.events[i].url +
+      //         " target=\"_blank\"" +
+      //         ">" +
+      //         events.events[i].url +
+      //         "</a></p>"
+      //     );
+      //     $(".modal-body").append("<br>");
+      //   }
+      // });
     },
     eventMouseover: function() {
       $(this).css("border-color", "#00427f");
@@ -365,7 +365,6 @@ $(document).on("click", "#addEventBtn", function(event) {
       allDay
   );
   eventObj.allDay = allDay;
-  console.log("event Add");
   $.ajax("/api/event/", {
     method: "POST",
     data: {
