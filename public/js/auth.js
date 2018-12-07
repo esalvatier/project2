@@ -1,10 +1,10 @@
 var config = {
-  apiKey: "AIzaSyBL_LaPryoNiAeqDaOxA8TtHCGQqQauH6c",
-  authDomain: "personal-budget-app-5f7f7.firebaseapp.com",
-  databaseURL: "https://personal-budget-app-5f7f7.firebaseio.com",
-  projectId: "personal-budget-app-5f7f7",
-  storageBucket: "personal-budget-app-5f7f7.appspot.com",
-  messagingSenderId: "239802611255"
+  apiKey: "AIzaSyC5zyqG5mwPDszfk18PvFAhTzLB68k807o",
+  authDomain: "groupproject2eventcal.firebaseapp.com",
+  databaseURL: "https://groupproject2eventcal.firebaseio.com",
+  projectId: "groupproject2eventcal",
+  storageBucket: "groupproject2eventcal.appspot.com",
+  messagingSenderId: "295266350244"
 };
 firebase.initializeApp(config);
 
