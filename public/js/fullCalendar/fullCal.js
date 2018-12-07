@@ -266,7 +266,7 @@ $(document).ready(function() {
           $(".modal-body").append(
             "<p class=recommendEvents>URL: <a href=" +
               events.events[i].url +
-              " target=\"_blank\"" +
+              ' target="_blank"' +
               ">" +
               events.events[i].url +
               "</a></p>"
@@ -349,10 +349,10 @@ $(document).ready(function() {
     var title = $("#addEventTitle")
       .val()
       .trim();
-  
+
     var strtTime = $("#addEventStartTime").val();
     var endTime = $("#addEventEndTime").val();
-  
+
     var start = $("#addEventStart")
       .val()
       .trim();
