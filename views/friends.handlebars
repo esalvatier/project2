@@ -1,9 +1,8 @@
+<script src="/js/friends.js"></script>
+<script src="/js/invite.js"></script>
+<script src="/js/search.js"></script>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Project 2 Event</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  {{> nav/navbar}}
 </nav>
 
 <div class="row contentRow no-gutters">
@@ -11,27 +10,28 @@
     <div id="circle1"></div>
   </div>
   <div class="col-lg-6 centerContent">
-    <div id="friends-display" data-history="true">
+    <div id="friends-display">
       <div class="requests">
         <h1>Requests</h1>
         <ul id="requests"></ul>
       </div>
-      <div class="friends" id="friends">
+      <div class="friends">
         <h1>Friends</h1>
+        <ul id="friends"></ul>
       </div>
     </div>
 
     <br>
     <br>
-    <br>
-    <br>
 
-    <div class="invite-friends">
+    <div class="invite-friends border">
       <form>
-        <h3>Email</h3>
-        <input id="email-input" value="dmitrii_zakharov@hotmail.com"></input>
-        {{!-- <h3>Message</h3>
-        <input id="message-input"></input> --}}
+        <h3>Invite a friend to the App!</h3>
+        <p>Enter their email bellow to send a link to the app.</p>
+        <label for="email-input">Email</label>
+
+        <input id="email-input" placeholder="Enter email..."></input>
+
         <br>
         <button id="send-email-button">Submit</button>
       </form>
@@ -39,19 +39,19 @@
 
     <br>
     <br>
-    <br>
-    <br>
 
-    <div class="search-friends">
+    <div class="search-friends border">
       <form>
-        <h3>Search</h3>
-        <input id="search-input" value="Dmitrii"></input>
-        {{!-- <h3>Message</h3>
-        <input id="message-input"></input> --}}
+        <label for="search-input">Search</label>
+        <input id="search-input" placeholder="Enter first or last name, or email"></input>
         <br>
         <button id="search-button">Search</button>
       </form>
-      <div id="friends-found"></div>
+      <div>
+        <ul id="friends-found">
+
+        </ul>
+      </div>
     </div>
 
     {{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large
