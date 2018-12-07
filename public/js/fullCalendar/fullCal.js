@@ -172,68 +172,7 @@ $(document).ready(function() {
         $("#editEventEnd").attr("value", eventEndDate);
         $("#editEventEndTime").attr("value", eventEndTime);
       }
-
-      var eventStartTimeForEventbrite = moment(calEvent.start).format(
-        "YYYY-MM-DD"
-      );
-      var eventStartTimeForEventbrite2 = moment(calEvent.start).format(
-        "HH:mm:ss"
-      );
-      var eventStartTimeForEventbrite3 =
-        eventStartTimeForEventbrite + "T" + eventStartTimeForEventbrite2 + "Z";
-
-      var eventEndTimeForEventbrite = moment(calEvent.end).format("YYYY-MM-DD");
-      var eventEndTimeForEventbrite2 = moment(calEvent.end).format("HH:mm:ss");
-      var eventEndTimeForEventbrite3 =
-        eventStartTimeForEventbrite + "T" + eventStartTimeForEventbrite2 + "Z";
-
-      //format the URL
-      // var url =
-      // ("https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&start_date.range_start=");
-      // url += eventStartTimeForEventbrite3;
-      // url += "&start_date.range_end=";
-      // url += eventEndTimeForEventbrite3;
-      // url +=
-      //   "&categories=103,113,105,104,108,107,102,109,110,111,114,115,116,106,117,118,119&token=E3HXKGT4QLZPWYHIGQD2";
-      // console.log("URL: " + url);
-
-      //call into eventbrite API
-      // var API = {
-      //   getEvents: function() {
-      //     return $.ajax({
-      //       url: url,
-      //       type: "GET"
-      //     });
-      //   }
-      // };
-
-      // API.getEvents().then(function(events) {
-      //   console.log(events);
-      //   //var events = JSON.parse(data);
-      //   console.log("Parsed JSON: " + events);
-      //   var count = events.pagination.object_count;
-      //   console.log("count: " + count);
-
-      //   for (var i = 0; i < count; i++) {
-      //     console.log("Name: " + events.events[i].name.text);
-      //     $(".modal-body").append(
-      //       "<p class=recommendEvents>Name:" +
-      //         events.events[i].name.text +
-      //         "</p>"
-      //     );
-      //     console.log("Url: " + events.events[i].url);
-      //     console.log("\n");
-      //     $(".modal-body").append(
-      //       "<p class=recommendEvents>URL: <a href=" +
-      //         events.events[i].url +
-      //         " target=\"_blank\"" +
-      //         ">" +
-      //         events.events[i].url +
-      //         "</a></p>"
-      //     );
-      //     $(".modal-body").append("<br>");
-      //   }
-      // });
+      $("#descriptionP").text(calEvent.description);
     },
     eventMouseover: function() {
       $(this).css("border-color", "#00427f");
@@ -371,4 +310,63 @@ $(document).on("click", "#addEventBtn", function(event) {
     }
   });
   $(".bd-addEvent-modal-lg").modal("hide");
+});
+
+$(document).on("click", "#getRecommends", function(event) {
+  event.preventDefault();
+  var ebEventStart = $("#addEventStart")
+    .val()
+    .trim();
+  if (ebEventStart === "") {
+    $("#addEventStart").css("color", "red");
+  }
+  var ebEventStartTime = $("#addEventStartTime").val();
+  if (ebEventStartTime === "") {
+    $("#addEventStartTime").css("color", "red");
+  }
+  var eventStartRange = ebEventStart + "T" + ebEventStartTime;
+  eventStartRange = moment(eventStartRange).format("YYYY-MM-DDTHH:mm:ss");
+  var eventEndRange = moment(eventStartRange)
+    .add(1, "hour")
+    .format("YYYY-MM-DDTHH:mm:ss");
+  console.log(eventEndRange);
+  //format the URL
+  eventStartRange += "Z";
+  eventEndRange += "Z";
+  var url =
+    "https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&start_date.range_start=";
+  url += eventStartRange;
+  url += "&start_date.range_end=";
+  url += eventEndRange;
+  url +=
+    "&categories=103,113,105,104,108,107,102,109,110,111,114,115,116,106,117,118,119&token=E3HXKGT4QLZPWYHIGQD2";
+  console.log(url);
+  var API = {
+    getEvents: function() {
+      return $.ajax({
+        url: url,
+        type: "GET"
+      });
+    }
+  };
+
+  API.getEvents().then(function(events) {
+    var count = events.pagination.object_count;
+    $("#addEventStart").css("color", "black");
+    $("#addEventStartTime").css("color", "black");
+    for (var i = 0; i < count; i++) {
+      $("#eventRecommendations").append(
+        "<p class=recommendEvents>Name:" + events.events[i].name.text + "</p>"
+      );
+      $("#eventRecommendations").append(
+        "<p class=recommendEvents>URL: <a href=" +
+          events.events[i].url +
+          " target=\"_blank\"" +
+          ">" +
+          events.events[i].url +
+          "</a></p>"
+      );
+      $("#eventRecommendations").append("<br>");
+    }
+  });
 });

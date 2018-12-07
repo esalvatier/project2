@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   {{> nav/navbar}}
 </nav>
-
+<script src="/js/fullCalendar/fullCal.js"></script>
 <div class="row contentRow no-gutters">
   <div class="col-lg-3 sideBars">
     <div id="circle1"></div>
@@ -33,9 +33,10 @@
               {{!-- Start Date --}}
               <div class="form-group">
                 <label for="addEventStart">Start Date</label>
-                <input type="date" class="form-control modalInput" id="addEventStart"></input>
+                <input type="date" class="form-control modalInput" id="addEventStart" required></input>
                 <label for="addEventStartTime">Start Time</label>
                 <input type="time" class="addEventStartTime modalInput" id="addEventStartTime" step="300" required></input>
+                <button class="btn btn-primary" id="getRecommends">Get Recomendations!</button>
               </div>
 
               {{!-- End Day --}}
@@ -55,8 +56,12 @@
                 <input type="text" class="modalInput" id="eventDescription">
               </div>
             </form>
-
-            <p class="recommendEvents">Recommendations for Events that start at the same time</p>
+            <hr>
+            <h3>Recommended Events</h3>
+            <p>Paste into Description</p>
+            <hr>
+            <div id="eventRecommendations">
+            </div>
           </div>
 
           <div class="modal-footer">
@@ -70,7 +75,6 @@
 
 
     {{!-- Edit/View Existing Modal --}} {{!-- Calendar --}}
-    <script src="/js/fullCalendar/fullCal.js"></script>
     <div id="calendar" data-history="false"></div>
     <div class="modal fade bd-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
       aria-hidden="true">
@@ -107,13 +111,11 @@
               </div>
 
             </form>
-
-            <p class="recommendEvents">Recommendations for Events that start at the same time</p>
+            <h3>Description:</h3>
+            <p id="descriptionP"></p>
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
