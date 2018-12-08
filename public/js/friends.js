@@ -4,7 +4,7 @@
 var API = {
   getFriends: function(id) {
     return $.ajax({
-      url: "api/friend/" + id,
+      url: "/api/friend/" + id,
       type: "GET"
     });
   }

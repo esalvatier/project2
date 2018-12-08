@@ -89,6 +89,7 @@ module.exports = function(app) {
     var fromUser = req.body.fromUser;
     var targetUser = req.body.targetUser;
     var status = req.body.status;
+    console.log(req.body);
     db.userRelationship
       .create({ fromUser: fromUser, targetUser: targetUser, code: status })
       .then(function(dbExample) {

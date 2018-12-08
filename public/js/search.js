@@ -42,6 +42,7 @@ $(document).on("click", "#search-button", function(event) {
 });
 
 $(document).on("click", ".frndRequestBtn", function() {
+  console.log("request");
   var targetUser = $(this).attr("uid");
   var fromUser = sessionStorage.getItem("localUID");
   $.ajax("/api/friend", {

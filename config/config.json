@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "root",
-    "password": "YES",
+    "password": "l4z4rus123",
     "database": "eventorganizerdb",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "YES",
+    "password": "l4z4rus123",
     "database": "eventorganizerdb",
     "host": "localhost",
     "dialect": "mysql",
