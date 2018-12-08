@@ -47,6 +47,8 @@ $(document).ready(function() {
     $.ajax("/api/friend", {
       method: "POST",
       data: { fromUser: fromUser, targetUser: targetUser, status: 1 }
+    }).then(function(resp) {
+      console.log(resp);
     });
     $(this)
       .parent()
