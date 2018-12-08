@@ -91,10 +91,7 @@ module.exports = function(app) {
     var status = req.body.status;
     console.log(req.body);
     db.userRelationship
-      .create({ fromUser: fromUser, targetUser: targetUser, code: status })
-      .then(function(dbExample) {
-        res.json(dbExample);
-      });
+      .create({ fromUser: fromUser, targetUser: targetUser, code: status });
   });
 
   app.put("/api/friend", function(req, res) {
