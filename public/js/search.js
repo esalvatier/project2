@@ -1,8 +1,6 @@
 $(document).on("click", "#search-button", function(event) {
   event.preventDefault();
 
-  console.log("IN SEARCH BUTTON HANDLER");
-
   // Grabs user input
   var searchterm = $("#search-input")
     .val()

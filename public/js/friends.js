@@ -1,19 +1,8 @@
 // Get references to page elements
-
-// The API object contains methods for each kind of request we'll make
-var API = {
-  getFriends: function(id) {
-    return $.ajax({
-      url: "/api/friend/" + id,
-      type: "GET"
-    });
-  }
-};
-
 // refreshFriends gets new friends from the db and repopulates the list
 var refreshFriends = function() {
   var localUID = sessionStorage.getItem("localUID");
-  API.getFriends(localUID).then(function(data) {
+  $.ajax("/api/friend/" + localUID, { method: "GET" }).then(function(data) {
     data.requests.forEach(function(request) {
       $.ajax("/api/user", {
         method: "GET",
