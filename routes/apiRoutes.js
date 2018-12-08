@@ -156,5 +156,9 @@ app.get("/api/search", function(req, res) {
   });
 });
 
+pp.post("/api/update", function(req, res) {
+  db.Status.bulkCreate([{meaning: "pending"},{meaning: "accepted"}, {meaning: "rejected"}]);
+});
+
 };
 

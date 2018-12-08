@@ -92,6 +92,12 @@ $(document).on("click", ".declineButton", function() {
     .remove();
 });
 
+$(document).on("click", "#update", function() {
+  $.ajax("/api/statuses", {
+    method: "POST"
+  });
+})
+
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     $("#friends").empty();
