@@ -1,21 +1,21 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "exampledb",
+    "password": "YES",
+    "database": "eventorganizerdb",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "testdb",
+    "password": "YES",
+    "database": "eventorganizerdb",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false
   },
-  "production": {
-    "use_env_variable": "JAWSDB_URL",
+  "production":{
+    "use_env_variable": "mysql://ucmmxn6sg6s7euro:eb6huf85shfcqfk7@ehc1u4pmphj917qf.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/mw21h01311yfvgpq",
     "dialect": "mysql"
   }
 }

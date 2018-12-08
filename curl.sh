@@ -1,0 +1,1 @@
+curl --header "Content-Type: application/x-www-form-urlencoded" --request POST --data "code=2COJBJLAHF2GZ7CTE2QL&client_secret=G3TWZ52S4DBMRGNONWZKO7IN4UCNXKGNMXAPIOAE3HXKGT4QLZPWYHIGQD2d=LBENA4453HC2FXYPVU&client_id=LBENA4453HC2FXYPVU&grant_type=authorization_code" https://www.eventbrite.com/oauth/token
