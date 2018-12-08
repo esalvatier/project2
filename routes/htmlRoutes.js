@@ -5,9 +5,7 @@ var script = "../public/js/auth.js";
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.render("index");
-    });
+    res.render("index");
   });
 
   app.get("/history", function(req, res) {
@@ -20,17 +18,6 @@ module.exports = function(app) {
 
   app.get("/friends", function(req, res) {
     res.render("friends");
-  });
-
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(
-      dbExample
-    ) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
   });
 
   app.get("/events", function(req, res) {
