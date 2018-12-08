@@ -156,7 +156,7 @@ app.get("/api/search", function(req, res) {
   });
 });
 
-app.post("/api/update", function(req, res) {
+app.post("/api/statuses", function(req, res) {
   db.Status.bulkCreate([{meaning: "pending"},{meaning: "accepted"}, {meaning: "rejected"}]);
 });
 
