@@ -65,7 +65,7 @@ $(document).on("click", ".acceptButton", function() {
   });
   var targetUser = $(this).attr("uid");
   var user = sessionStorage.getItem("localUID");
-  $.ajax("/api/friend", {
+  $.ajax("/api/newFriend", {
     method: "POST",
     data: { fromUser: user, targetUser: targetUser, status: 2 }
   }).then(function() {

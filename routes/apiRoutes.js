@@ -85,7 +85,7 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/api/friend", function(req, res) {
+  app.post("/api/newFriend", function(req, res) {
     var fromUser = req.body.fromUser;
     var targetUser = req.body.targetUser;
     var status = req.body.status;

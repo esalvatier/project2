@@ -44,7 +44,7 @@ $(document).ready(function() {
     console.log("request");
     var targetUser = $(this).attr("uid");
     var fromUser = sessionStorage.getItem("localUID");
-    $.ajax("/api/friend", {
+    $.ajax("/api/newFriend", {
       method: "POST",
       data: { fromUser: fromUser, targetUser: targetUser, status: 1 }
     }).then(function(resp) {
